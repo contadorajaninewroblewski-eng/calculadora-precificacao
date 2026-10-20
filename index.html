@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Sua Empresa na Reforma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -347,6 +348,32 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
           </div>
         </div>
 
+        <div class="result-card" id="cr-card">
+          <div class="k">Se você compra desse fornecedor e é do lucro real</div>
+          <div class="v" id="cr-titulo">—</div>
+          <div class="sub" id="cr-sub">—</div>
+          <div class="field" style="margin-top:14px">
+            <label class="lbl" for="cr-valor">Valor do serviço que você vai contratar</label>
+            <div class="amount-box">
+              <span>R$</span>
+              <input id="cr-valor" inputmode="decimal" value="10.000,00">
+            </div>
+            <div class="hint">Preço do serviço, sem a CBS e o IBS que seriam cobrados por fora. É sobre ele que se calcula o crédito.</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Crédito de CBS e IBS para você</th><th class="num">Fornecedor no DAS</th><th class="num">Fornecedor por fora</th></tr></thead>
+              <tbody>
+                <tr><td>Valor da nota</td><td class="num" id="cr-nota-a">—</td><td class="num" id="cr-nota-b">—</td></tr>
+                <tr><td>Crédito por nota</td><td class="num" id="cr-cred-a">—</td><td class="num" id="cr-cred-b">—</td></tr>
+                <tr><td>Crédito sobre o preço</td><td class="num" id="cr-pct-a">—</td><td class="num" id="cr-pct-b">—</td></tr>
+                <tr class="total"><td>Custo líquido, depois do crédito</td><td class="num" id="cr-liq-a">—</td><td class="num" id="cr-liq-b">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="how" id="cr-how">—</p>
+        </div>
+
         <div class="table-wrap">
           <table>
             <thead><tr><th>Mantendo a mesma sobra para você</th><th class="num">No DAS</th><th class="num">Por fora</th></tr></thead>
@@ -446,7 +473,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   </div>
 
   <div class="legal">
-    Simulação simplificada e educativa, com base na Lei Complementar 214/2025 (art. 41, § 3º, que permite apurar IBS e CBS fora do DAS, e art. 47, § 9º, II, sobre o crédito de quem compra de optante do Simples), nas tabelas dos anexos da Lei Complementar 123/2006 e em estimativas públicas da alíquota de referência (CGIBS, 26,5% somados — 8,8% de CBS e 17,7% de IBS). <b>A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026</b> — nenhum número aqui é definitivo. O cálculo usa 12× o seu mês médio como receita dos últimos 12 meses, trata o crédito de insumos como a parcela de CBS/IBS embutida no que você paga, e não considera IRPJ/CSLL/CPP fora do DAS, sublimite estadual, o teto de 5% do ISS na 5ª faixa, Imposto Seletivo, regimes específicos nem particularidades estaduais e municipais. Não substitui análise profissional.
+    Simulação simplificada e educativa, com base na Lei Complementar 214/2025 (art. 41, § 3º, que permite apurar IBS e CBS fora do DAS, e art. 47, § 9º, II, sobre o crédito de quem compra de optante do Simples), na Lei Complementar 227/2026, nas Resoluções CGSN 190 e 191/2026, nas tabelas dos anexos da Lei Complementar 123/2006 (conferidas com o texto compilado em 20/10/2026) e em estimativas públicas da alíquota de referência (CGIBS, 26,5% somados — 8,8% de CBS e 17,7% de IBS). <b>A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026</b> — nenhum número aqui é definitivo. O cálculo usa 12× o seu mês médio como receita dos últimos 12 meses, trata o crédito de insumos como a parcela de CBS/IBS embutida no que você paga, e não considera IRPJ/CSLL/CPP fora do DAS, sublimite estadual, o teto de 5% do ISS na 5ª faixa, Imposto Seletivo, regimes específicos nem particularidades estaduais e municipais. Não substitui análise profissional.
   </div>
 
   <footer>ASSESCONT Serviços Contábeis · simulador educativo, sem validade fiscal</footer>
@@ -471,6 +498,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   ];
   var MEI_LIMITE = 81000;
 
+  // Conferido em 20/10/2026 com o texto compilado da LC 123/2006 (Planalto, redação da LC 155/2016).
   // Anexos da LC 123/2006: faixas (limite de RBT12, alíquota nominal, dedução)
   // e a parcela de PIS/COFINS (pc) e de ICMS/ISS (ii) dentro da alíquota, por faixa.
   var ANEXOS = [
@@ -602,7 +630,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   /* ---------------- estado ---------------- */
 
   var mei = { fat:5000, ativ:'servicos', cli:'pj' };
-  var sn  = { fat:20000, anexo:'III', ano:2033, mix:50, insumos:0, red:'padrao' };
+  var sn  = { fat:20000, anexo:'III', ano:2033, mix:50, insumos:0, red:'padrao', compra:10000 };
   var lp  = { valor:1000, ano:2026, setor:'comercio', iss:5, red:'padrao' };
 
   /* ---------------- MEI ---------------- */
@@ -813,6 +841,30 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     set('m-pj-b', vigente ? fmtBRL(pjB) : '—');
     set('m-mix-b', vigente ? fmtBRL(mixB) : '—');
 
+    /* ---- crédito de quem compra no lucro real ---- */
+    var V = sn.compra;
+    var cPct = aA*share;                       // fatia da nota do DAS que vira crédito
+    var credA = V*cPct;
+    var credB = V*t;
+    set('cr-titulo', vigente ? 'Crédito de ' + fmtBRL(credA) + ' por ' + fmtBRL(V) + ' de serviço' : 'Sem crédito em 2026');
+    if(vigente){
+      set('cr-sub', 'Comprando de um fornecedor que ficou no DAS, você credita só ' + fmtPct(cPct*100) + ' do preço. Se ele apurasse CBS e IBS por fora, o crédito seria de ' + fmtPct(t*100) + ': ' + fmtBRL(credB) + ' no mesmo serviço.');
+      set('cr-nota-a', fmtBRL(V));
+      set('cr-nota-b', fmtBRL(V*(1+t)));
+      set('cr-cred-a', fmtBRL(credA));
+      set('cr-cred-b', fmtBRL(credB));
+      set('cr-pct-a', fmtPct(cPct*100));
+      set('cr-pct-b', fmtPct(t*100));
+      set('cr-liq-a', fmtBRL(V-credA));
+      set('cr-liq-b', fmtBRL(V));
+      var maxNota = (1-cPct) > 0 ? V/(1-cPct) : 0;
+      set('cr-how', 'Na negociação: o fornecedor do DAS deixa de te dar ' + fmtBRL(credB-credA) + ' de crédito a cada ' + fmtBRL(V) + ' de serviço em relação a um fornecedor do regime regular. Para o seu custo líquido ficar igual ao de um fornecedor regular que cobra ' + fmtBRL(V) + ' sem IVA, a nota do fornecedor do DAS pode ser de até ' + fmtBRL(maxNota) + '. Acima disso, você paga mais caro. O crédito exige documento fiscal eletrônico idôneo (art. 47, § 1º, II) e, para fornecedor no DAS, corresponde ao montante equivalente ao devido por meio do regime (art. 47, § 9º, II, da LC 214/2025).');
+    } else {
+      set('cr-sub', 'O ano de teste da CBS e do IBS não alcança o Simples Nacional. Escolha 2027 ou um ano seguinte para ver o crédito.');
+      ['nota','cred','pct','liq'].forEach(function(k){ set('cr-'+k+'-a','—'); set('cr-'+k+'-b','—'); });
+      set('cr-how','—');
+    }
+
     /* ---- textos de apoio ---- */
     var nomeFaixa = ['1ª','2ª','3ª','4ª','5ª','6ª'][fi];
     set('sn-fat-hint','Usamos 12× esse valor como sua receita dos últimos 12 meses: '+fmtBRL(rbt12)+', que cai na '+nomeFaixa+' faixa do anexo '+anexo.id+'.');
@@ -951,6 +1003,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   bindAmount('mei-fat', function(v){ mei.fat=v; calcMEI(); });
   bindAmount('sn-fat', function(v){ sn.fat=v; calcSN(); });
   bindAmount('sn-insumos', function(v){ sn.insumos=v; calcSN(); });
+  bindAmount('cr-valor', function(v){ sn.compra=v; calcSN(); });
   bindAmount('lp-valor', function(v){ lp.valor=v; calcLP(); });
 
   renderMEI(); calcMEI();

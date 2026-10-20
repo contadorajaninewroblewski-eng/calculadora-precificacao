@@ -22,6 +22,18 @@ Abra o arquivo `index.html` no navegador. Não precisa de servidor nem de instal
 
 A alíquota de referência de 26,5% (8,8% de CBS e 17,7% de IBS) é a estimativa pública do Comitê Gestor do IBS. A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026, então nenhum número aqui é definitivo.
 
+## Fontes e conferência das tabelas
+
+Em 20/10/2026, as faixas, as alíquotas nominais, as parcelas a deduzir e a repartição dos tributos usadas no cálculo foram conferidas, uma a uma, com o texto compilado da Lei Complementar 123/2006 no site do Planalto (versão dada pela LC 155/2016, vigente desde 1º/1/2018, com a anotação de efeitos da LC 214/2025). Anexos I a V batem com o que está no código. A parcela de CBS usada no cálculo é a soma de COFINS e PIS/Pasep de cada faixa. Por exemplo, na 3ª faixa do anexo III: 13,64% + 2,96% = 16,6%.
+
+O texto compilado não traz anexo novo nem alteração nas alíquotas e repartições. Ele registra que a LC 214/2025 e a LC 227/2026 mudaram regras do Simples (inclusive o repasse do IBS ao Comitê Gestor do IBS), mas as tabelas continuam as de 2018. Se uma resolução do CGSN ou uma nova lei trouxer outra repartição, esses valores precisam ser atualizados no código.
+
+Mudanças de regra, a partir de 1º/1/2027, vêm das Resoluções CGSN 190 e 191/2026, que se somam à 183/2025 (fonte: Receita Federal, agosto de 2026). A opção pelo regime regular de CBS e IBS (o "Simples híbrido") tem janelas de 1º a 30/9/2026, para valer de janeiro a junho de 2027, e de 1º a 31/3/2027, para o segundo semestre. Há notícias de prorrogação do prazo de 2026, então confirme a data no Portal do Simples Nacional antes de orientar um cliente.
+
+## Aba do comprador no lucro real
+
+Na aba do Simples Nacional, o bloco "Se você compra desse fornecedor e é do lucro real" mostra quanto de crédito de CBS e IBS a nota do fornecedor gera para quem compra no lucro real, em reais e em percentual do preço, comparando fornecedor no DAS e fornecedor que apura por fora. O crédito do fornecedor no DAS é a alíquota efetiva do DAS multiplicada pela parcela de CBS e IBS da faixa. Os dados do fornecedor (anexo, faturamento, ano) são os campos da própria aba.
+
 ## O que o cálculo não considera
 
 Teto de 5% do ISS na 5ª faixa, sublimite estadual, fator R (o anexo é escolhido na mão), IRPJ, CSLL e CPP recolhidos fora do DAS, Imposto Seletivo, regimes específicos e particularidades estaduais e municipais.
