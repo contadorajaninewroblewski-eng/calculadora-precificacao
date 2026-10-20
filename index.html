@@ -1,0 +1,960 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Sua Empresa na Reforma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+/* layout: abas por regime; controles à esquerda, resultado à direita (empilha no celular) */
+:root{
+  --bg:#050c20;
+  --panel:#0a1630;
+  --line:rgba(255,255,255,.14);
+  --fg:#fff;
+  --fg-dim:rgba(255,255,255,.68);
+  --fg-faint:rgba(255,255,255,.48);
+  --gold:#E2B54E;
+  --gold-hi:#FFE9A8;
+  --good:#7FD4A0;
+  --warn:#F0A868;
+  --bad:#F0806E;
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+body{
+  background:
+    radial-gradient(900px 600px at 100% 0%, rgba(226,181,78,.12), rgba(226,181,78,0) 60%),
+    radial-gradient(1000px 700px at 0% 100%, rgba(46,98,200,.35), rgba(46,98,200,0) 60%),
+    var(--bg);
+  color:var(--fg);
+  font-family:'Montserrat',sans-serif;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+}
+h1,h2,h3{font-family:'Fraunces',serif;text-wrap:balance;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-block:28px 56px}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1.5px solid var(--gold);color:var(--gold-hi);
+  font-weight:800;font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  padding:7px 16px;border-radius:40px;background:rgba(5,12,32,.6);
+}
+.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+
+header{margin-bottom:24px}
+header h1{font-size:clamp(28px,5vw,42px);font-weight:600;margin-top:14px;line-height:1.12}
+header p{color:var(--fg-dim);font-size:16px;line-height:1.55;max-width:60ch;margin-top:12px}
+
+/* abas de regime */
+.tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.tab{
+  appearance:none;border:1.5px solid var(--line);background:var(--panel);color:var(--fg-dim);
+  font-family:'Fraunces',serif;font-weight:600;font-size:16px;padding:12px 22px;border-radius:14px;
+  cursor:pointer;transition:border-color .15s,color .15s,background .15s;
+}
+.tab:hover{border-color:rgba(226,181,78,.5)}
+.tab[aria-selected="true"]{background:rgba(226,181,78,.16);border-color:var(--gold);color:var(--gold-hi)}
+.tab:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+.lead{color:var(--fg-dim);font-size:14.5px;line-height:1.55;max-width:70ch;margin:0 0 20px}
+.lead b{color:var(--fg)}
+
+.grid{display:grid;grid-template-columns:1.02fr 1fr;gap:22px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+.card{
+  background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+  border:1px solid var(--line);border-radius:22px;padding:24px;min-width:0;
+}
+.field{margin-bottom:22px}
+.field:last-child{margin-bottom:0}
+label.lbl{display:block;font-weight:700;font-size:13px;letter-spacing:.3px;margin-bottom:10px;color:var(--fg)}
+.hint{font-size:12.5px;color:var(--fg-faint);margin-top:8px;line-height:1.5}
+
+.amount-box{
+  display:flex;align-items:center;gap:8px;
+  background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;
+}
+.amount-box span{color:var(--gold-hi);font-weight:800;font-size:20px}
+.amount-box input{
+  flex:1;min-width:0;background:transparent;border:none;outline:none;
+  color:var(--fg);font-family:'Montserrat',sans-serif;font-weight:800;font-size:22px;
+  font-variant-numeric:tabular-nums;
+}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  appearance:none;border:1.5px solid var(--line);background:var(--panel);color:var(--fg-dim);
+  font-family:inherit;font-weight:700;font-size:13.5px;padding:9px 15px;border-radius:30px;
+  cursor:pointer;transition:border-color .15s,color .15s,background .15s;white-space:nowrap;
+}
+.chip:hover{border-color:rgba(226,181,78,.5)}
+.chip.on{background:var(--gold);border-color:var(--gold);color:#1a1204}
+.chip:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+
+.sub-toggle{margin-top:10px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--fg-dim);flex-wrap:wrap}
+.sub-toggle button{
+  appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--fg-dim);
+  font-family:inherit;font-weight:700;font-size:12.5px;padding:6px 12px;border-radius:20px;cursor:pointer;
+}
+.sub-toggle button.on{background:rgba(226,181,78,.18);border-color:var(--gold);color:var(--gold-hi)}
+
+/* resultado */
+.result-card{
+  background:linear-gradient(160deg,rgba(226,181,78,.1),rgba(226,181,78,.02));
+  border:1px solid rgba(226,181,78,.35);border-radius:22px;padding:26px;margin-bottom:16px;
+}
+.result-card .k{font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-hi);font-weight:800}
+.result-card .v{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(32px,5.6vw,46px);margin-top:8px;font-variant-numeric:tabular-nums;line-height:1.05}
+.result-card .sub{color:var(--fg-dim);font-size:14px;margin-top:8px;line-height:1.5}
+
+.mini-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media (max-width:520px){.mini-cards{grid-template-columns:1fr}}
+.mini{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}
+.mini .k{font-size:12px;color:var(--fg-faint);line-height:1.4}
+.mini .v{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin-top:6px;font-variant-numeric:tabular-nums}
+.mini .v.good{color:var(--good)}
+.mini .v.warn{color:var(--warn)}
+.mini .d{font-size:12.5px;margin-top:4px;color:var(--fg-faint);line-height:1.45}
+
+/* barra do limite do MEI */
+.bar{height:9px;border-radius:20px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;border-radius:20px;background:var(--good);transition:width .25s}
+.bar i.warn{background:var(--warn)}
+.bar i.bad{background:var(--bad)}
+
+/* comparação dentro x fora do DAS */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media (max-width:760px){.vs{grid-template-columns:1fr}}
+.col{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0}
+.col.pick{border-color:var(--gold);background:linear-gradient(160deg,rgba(226,181,78,.12),rgba(255,255,255,.02))}
+.col.off{opacity:.5}
+.col h3{font-size:15.5px;font-weight:600;line-height:1.25}
+.col .tagline{font-size:12px;color:var(--fg-faint);margin-top:4px;line-height:1.4}
+.col dl{margin:14px 0 0;display:grid;gap:11px}
+.col .row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 12px;font-size:13px}
+.col .row dt{color:var(--fg-dim);flex:1 1 auto;min-width:0}
+.col .row dd{margin:0 0 0 auto;font-weight:800;font-variant-numeric:tabular-nums;text-align:right;min-width:0}
+.col .row.hi dd{color:var(--gold-hi)}
+.col .row dd .note{display:block;font-weight:600;font-size:11.5px;color:var(--fg-faint);margin-top:3px;line-height:1.35}
+.col .row.sep{border-top:1px solid var(--line);padding-top:11px}
+
+.badge{
+  display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  padding:5px 11px;border-radius:30px;background:rgba(127,212,160,.16);color:var(--good);
+  border:1px solid rgba(127,212,160,.4);margin-bottom:10px;
+}
+.badge.neutral{background:rgba(255,255,255,.08);color:var(--fg-dim);border-color:var(--line)}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px}
+th,td{text-align:left;padding:11px 14px;white-space:nowrap}
+thead th{color:var(--fg-faint);font-weight:700;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--line)}
+tbody tr+tr td{border-top:1px solid var(--line)}
+tbody tr.total td{font-weight:800;color:var(--gold-hi)}
+td.num{font-variant-numeric:tabular-nums;text-align:right}
+
+.facts{display:grid;gap:12px;margin-top:16px}
+.fact{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--fg-dim)}
+.fact b{color:var(--fg)}
+.fact:before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-top:7px}
+
+.how{margin-top:20px;font-size:13.5px;line-height:1.6;color:var(--fg-dim)}
+.how b{color:var(--fg)}
+
+.ghost-btn{
+  appearance:none;margin-top:16px;border:1.5px solid var(--line);background:var(--panel);
+  color:var(--gold-hi);font-family:inherit;font-weight:800;font-size:13.5px;
+  padding:12px 18px;border-radius:30px;cursor:pointer;
+}
+.ghost-btn:hover{border-color:var(--gold)}
+
+.legal{margin-top:28px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;line-height:1.6;color:var(--fg-faint)}
+.legal b{color:var(--fg-dim)}
+
+.cta{
+  margin-top:28px;border:1px solid var(--line);border-radius:22px;padding:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;
+}
+.cta h3{font-size:19px;font-weight:600;max-width:40ch}
+.cta p{color:var(--fg-dim);font-size:13.5px;margin-top:6px;max-width:42ch}
+.btn-wpp{
+  display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#1a1204;
+  font-weight:800;font-size:14.5px;padding:13px 22px;border-radius:40px;text-decoration:none;white-space:nowrap;
+}
+.btn-wpp:hover{filter:brightness(1.06)}
+
+footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Simulador · Reforma Tributária</span>
+    <h1>O que a reforma muda para a sua empresa</h1>
+    <p>Escolha o seu regime e veja, ano a ano até 2033, o que acontece com a sua guia, com o seu preço e com o que sobra para você.</p>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Regime">
+    <button class="tab" id="tab-mei" role="tab" aria-selected="true" aria-controls="panel-mei">MEI</button>
+    <button class="tab" id="tab-simples" role="tab" aria-selected="false" aria-controls="panel-simples">Simples Nacional</button>
+    <button class="tab" id="tab-lp" role="tab" aria-selected="false" aria-controls="panel-lp">Fora do Simples</button>
+  </div>
+
+  <!-- ============ MEI ============ -->
+  <div id="panel-mei" role="tabpanel" aria-labelledby="tab-mei">
+    <p class="lead">O DAS do MEI é um valor fixo por mês, e a reforma não muda isso. <b>O que muda é o crédito que a sua nota passa para quem compra de você.</b></p>
+    <div class="grid">
+      <div class="card">
+        <div class="field">
+          <label class="lbl" for="mei-fat">Quanto você fatura por mês, em média</label>
+          <div class="amount-box">
+            <span>R$</span>
+            <input id="mei-fat" inputmode="decimal" value="5.000,00">
+          </div>
+          <div class="hint">Use a média dos seus meses. O limite do MEI é de R$ 81.000,00 por ano.</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">O que você faz</label>
+          <div class="chips" id="mei-ativ"></div>
+          <div class="hint" id="mei-ativ-hint"></div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">Seus clientes</label>
+          <div class="chips" id="mei-cli"></div>
+          <div class="hint" id="mei-cli-hint"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="result-card">
+          <div class="k">Seu DAS por mês</div>
+          <div class="v" id="mei-das">R$ 0,00</div>
+          <div class="sub" id="mei-das-sub">—</div>
+        </div>
+
+        <div class="mini-cards">
+          <div class="mini">
+            <div class="k">Sobra do faturamento, por mês</div>
+            <div class="v good" id="mei-sobra">R$ 0,00</div>
+            <div class="d">Antes dos seus custos. O DAS do MEI não é percentual: é valor fixo.</div>
+          </div>
+          <div class="mini">
+            <div class="k">Projeção no ano</div>
+            <div class="v" id="mei-ano">R$ 0,00</div>
+            <div class="d" id="mei-limite">—</div>
+            <div class="bar"><i id="mei-bar" style="width:0%"></i></div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Dentro do seu DAS fixo</th><th class="num">Valor</th></tr></thead>
+            <tbody id="mei-tabela"></tbody>
+          </table>
+        </div>
+
+        <div class="facts" id="mei-facts"></div>
+
+        <button class="ghost-btn" id="mei-to-simples" type="button">Ver como ficaria no Simples →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SIMPLES ============ -->
+  <div id="panel-simples" role="tabpanel" aria-labelledby="tab-simples" hidden>
+    <p class="lead">No Simples, a CBS e o IBS entram <b>dentro</b> do DAS. A partir de 2027 você pode escolher tirá-los da guia e apurá-los como uma empresa do regime normal — é essa conta que este simulador faz.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="field">
+          <label class="lbl" for="sn-fat">Quanto você fatura por mês, em média</label>
+          <div class="amount-box">
+            <span>R$</span>
+            <input id="sn-fat" inputmode="decimal" value="20.000,00">
+          </div>
+          <div class="hint" id="sn-fat-hint">—</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">Seu anexo</label>
+          <div class="chips" id="sn-anexo"></div>
+          <div class="hint" id="sn-anexo-hint"></div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">Ano da simulação</label>
+          <div class="chips" id="sn-ano"></div>
+          <div class="hint" id="sn-ano-hint"></div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">Quanto do seu faturamento é para empresas</label>
+          <div class="chips" id="sn-mix"></div>
+          <div class="hint">Empresas do regime normal aproveitam crédito das suas notas. Consumidor final não aproveita nada.</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="sn-insumos">Compras e insumos tributados por mês</label>
+          <div class="amount-box">
+            <span>R$</span>
+            <input id="sn-insumos" inputmode="decimal" value="0,00">
+          </div>
+          <div class="hint">Mercadorias, materiais e serviços que você compra de empresas. Fora do DAS, esse valor passa a gerar crédito para você.</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">Enquadramento da sua atividade no IBS/CBS</label>
+          <div class="chips" id="sn-red"></div>
+          <div class="hint" id="sn-red-hint"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="result-card">
+          <span class="badge" id="sn-badge">—</span>
+          <div class="k" id="sn-verdict-k">Melhor caminho</div>
+          <div class="v" id="sn-verdict">—</div>
+          <div class="sub" id="sn-verdict-sub">—</div>
+        </div>
+
+        <div class="vs">
+          <div class="col" id="col-das">
+            <h3>Ficar no DAS</h3>
+            <div class="tagline">Guia única, como hoje. Nada muda na sua rotina.</div>
+            <dl>
+              <div class="row"><dt>DAS que você paga</dt><dd id="a-das">—</dd></div>
+              <div class="row"><dt>Alíquota efetiva</dt><dd id="a-aliq">—</dd></div>
+              <div class="row"><dt>Crédito das suas compras</dt><dd id="a-cred-ins">—</dd></div>
+              <div class="row sep"><dt>Sobra para você</dt><dd id="a-sobra">—</dd></div>
+              <div class="row"><dt>O cliente paga</dt><dd id="a-preco">—</dd></div>
+              <div class="row hi"><dt>Custo real do cliente PJ</dt><dd id="a-custo-pj">—</dd></div>
+            </dl>
+          </div>
+          <div class="col" id="col-fora">
+            <h3>CBS e IBS por fora</h3>
+            <div class="tagline">Regime híbrido: a guia encolhe, e a CBS e o IBS passam a ser cobrados por fora, do cliente.</div>
+            <dl>
+              <div class="row"><dt>DAS reduzido, que você paga</dt><dd id="b-das">—</dd></div>
+              <div class="row"><dt>CBS + IBS cobrados do cliente</dt><dd id="b-iva">—</dd></div>
+              <div class="row"><dt>Crédito das suas compras</dt><dd id="b-cred-ins">—</dd></div>
+              <div class="row"><dt>CBS + IBS que você repassa</dt><dd id="b-repasse">—</dd></div>
+              <div class="row sep"><dt>Sobra para você</dt><dd id="b-sobra">—</dd></div>
+              <div class="row"><dt>O cliente paga</dt><dd id="b-preco">—</dd></div>
+              <div class="row hi"><dt>Custo real do cliente PJ</dt><dd id="b-custo-pj">—</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Mantendo a mesma sobra para você</th><th class="num">No DAS</th><th class="num">Por fora</th></tr></thead>
+            <tbody>
+              <tr><td>Preço para consumidor final</td><td class="num" id="m-cf-a">—</td><td class="num" id="m-cf-b">—</td></tr>
+              <tr><td>Custo para cliente empresa</td><td class="num" id="m-pj-a">—</td><td class="num" id="m-pj-b">—</td></tr>
+              <tr><td>Média, pela sua carteira de clientes</td><td class="num" id="m-mix-a">—</td><td class="num" id="m-mix-b">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="how" id="sn-how">—</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FORA DO SIMPLES ============ -->
+  <div id="panel-lp" role="tabpanel" aria-labelledby="tab-lp" hidden>
+    <p class="lead">No lucro presumido ou real, a CBS e o IBS são cobrados <b>por fora</b> do preço, enquanto o ICMS e o ISS ainda incidem por dentro. Veja quanto cobrar para manter o que você quer receber.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="field">
+          <label class="lbl" for="lp-valor">Quanto você quer receber, líquido</label>
+          <div class="amount-box">
+            <span>R$</span>
+            <input id="lp-valor" inputmode="decimal" value="1.000,00">
+          </div>
+          <div class="hint">Depois de descontar todos os tributos sobre a venda.</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">Ano da simulação</label>
+          <div class="chips" id="lp-anos"></div>
+          <div class="hint" id="lp-ano-hint"></div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">O que você vende</label>
+          <div class="chips" id="lp-setores"></div>
+          <div class="sub-toggle" id="lp-iss-toggle" hidden>
+            ISS do seu serviço:
+            <button type="button" data-iss="5" class="on">5%</button>
+            <button type="button" data-iss="3">3% (alguns municípios)</button>
+          </div>
+          <div class="hint" id="lp-setor-hint"></div>
+        </div>
+
+        <div class="field">
+          <label class="lbl">Enquadramento no IBS/CBS</label>
+          <div class="chips" id="lp-enquadra"></div>
+          <div class="hint" id="lp-enquadra-hint"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="result-card">
+          <div class="k" id="lp-ano-label">Preço de venda estimado</div>
+          <div class="v" id="lp-preco-final">R$ 0,00</div>
+          <div class="sub" id="lp-preco-sub">—</div>
+        </div>
+
+        <div class="mini-cards">
+          <div class="mini">
+            <div class="k">Tributos sobre a venda</div>
+            <div class="v warn" id="lp-tributos-total">R$ 0,00</div>
+            <div class="d" id="lp-carga-pct">—</div>
+          </div>
+          <div class="mini">
+            <div class="k">Com as regras de hoje, o preço seria</div>
+            <div class="v" id="lp-preco-hoje">R$ 0,00</div>
+            <div class="d" id="lp-diferenca">—</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Componente</th><th>Alíquota</th><th class="num">Valor</th></tr></thead>
+            <tbody>
+              <tr><td>Novo IVA (CBS + IBS) · cobrado por fora</td><td id="lp-r-iva">0%</td><td class="num" id="lp-v-iva">R$ 0,00</td></tr>
+              <tr><td>Tributos atuais que restam · por dentro</td><td id="lp-r-old">0%</td><td class="num" id="lp-v-old">R$ 0,00</td></tr>
+              <tr class="total"><td>Você recebe</td><td>·</td><td class="num" id="lp-v-net">R$ 0,00</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="how"><b>Como funciona:</b> até 2026, PIS/COFINS, ICMS e ISS continuam incidindo normalmente por dentro do preço. A partir de 2027, a CBS substitui PIS/COFINS, e o ICMS e o ISS somem aos poucos até 2033, dando lugar ao IBS. A CBS e o IBS são cobrados por fora do preço, então, nos primeiros anos, as duas camadas convivem — e o preço necessário muda a cada ano.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div>
+      <h3>O efeito real depende dos números da sua empresa</h3>
+      <p>Créditos sobre insumos, o regime de tributação e a forma como você precifica mudam esse resultado. Fale comigo para olhar isso com calma.</p>
+    </div>
+    <a class="btn-wpp" href="https://wa.me/5549991841378" target="_blank" rel="noopener">Falar no WhatsApp →</a>
+  </div>
+
+  <div class="legal">
+    Simulação simplificada e educativa, com base na Lei Complementar 214/2025 (art. 41, § 3º, que permite apurar IBS e CBS fora do DAS, e art. 47, § 9º, II, sobre o crédito de quem compra de optante do Simples), nas tabelas dos anexos da Lei Complementar 123/2006 e em estimativas públicas da alíquota de referência (CGIBS, 26,5% somados — 8,8% de CBS e 17,7% de IBS). <b>A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026</b> — nenhum número aqui é definitivo. O cálculo usa 12× o seu mês médio como receita dos últimos 12 meses, trata o crédito de insumos como a parcela de CBS/IBS embutida no que você paga, e não considera IRPJ/CSLL/CPP fora do DAS, sublimite estadual, o teto de 5% do ISS na 5ª faixa, Imposto Seletivo, regimes específicos nem particularidades estaduais e municipais. Não substitui análise profissional.
+  </div>
+
+  <footer>ASSESCONT Serviços Contábeis · simulador educativo, sem validade fiscal</footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------------- dados ---------------- */
+
+  // DAS fixo do MEI em 2026 (INSS de 5% sobre o salário mínimo de R$ 1.621,00 = R$ 81,05)
+  var MEI_INSS = 81.05;
+  var MEI_ATIV = [
+    {id:'comercio', label:'Comércio ou indústria', icms:1, iss:0, hint:'DAS de R$ 82,05: R$ 81,05 de INSS e R$ 1,00 de ICMS.'},
+    {id:'servicos', label:'Serviços', icms:0, iss:5, hint:'DAS de R$ 86,05: R$ 81,05 de INSS e R$ 5,00 de ISS.'},
+    {id:'ambos', label:'Comércio e serviços', icms:1, iss:5, hint:'DAS de R$ 87,05: R$ 81,05 de INSS, R$ 1,00 de ICMS e R$ 5,00 de ISS.'}
+  ];
+  var MEI_CLI = [
+    {id:'pf', label:'Consumidor final', hint:'Quem compra de você não aproveita crédito de tributo, então a reforma não mexe no seu preço.'},
+    {id:'pj', label:'Outras empresas', hint:'Aqui está o ponto de atenção: a nota do MEI quase não gera crédito para a empresa que compra de você.'}
+  ];
+  var MEI_LIMITE = 81000;
+
+  // Anexos da LC 123/2006: faixas (limite de RBT12, alíquota nominal, dedução)
+  // e a parcela de PIS/COFINS (pc) e de ICMS/ISS (ii) dentro da alíquota, por faixa.
+  var ANEXOS = [
+    {id:'I', label:'I · Comércio', nota:'Lojas e revenda de mercadorias.',
+     faixas:[[180000,4.00,0],[360000,7.30,5940],[720000,9.50,13860],[1800000,10.70,22500],[3600000,14.30,87300],[4800000,19.00,378000]],
+     rep:[[15.50,34.00],[15.50,34.00],[15.50,33.50],[15.50,33.50],[15.50,33.50],[34.40,0]]},
+    {id:'II', label:'II · Indústria', nota:'Fábricas e transformação.',
+     faixas:[[180000,4.50,0],[360000,7.80,5940],[720000,10.00,13860],[1800000,11.20,22500],[3600000,14.70,85500],[4800000,30.00,720000]],
+     rep:[[14.00,32.00],[14.00,32.00],[14.00,32.00],[14.00,32.00],[14.00,32.00],[25.50,0]]},
+    {id:'III', label:'III · Serviços', nota:'Serviços em geral, inclusive quando a folha chega a 28% do faturamento (fator R).',
+     faixas:[[180000,6.00,0],[360000,11.20,9360],[720000,13.50,17640],[1800000,16.00,35640],[3600000,21.00,125640],[4800000,33.00,648000]],
+     rep:[[15.60,33.50],[17.10,32.00],[16.60,32.50],[16.60,32.50],[15.60,33.50],[19.50,0]]},
+    {id:'IV', label:'IV · Serviços (sem CPP)', nota:'Construção, limpeza, vigilância e advocacia. O INSS patronal é pago fora do DAS.',
+     faixas:[[180000,4.50,0],[360000,9.00,8100],[720000,10.20,12420],[1800000,14.00,39780],[3600000,22.00,183780],[4800000,33.00,828000]],
+     rep:[[21.50,44.50],[25.00,40.00],[24.00,40.00],[23.00,40.00],[22.00,40.00],[25.00,0]]},
+    {id:'V', label:'V · Serviços (folha baixa)', nota:'Serviços com folha abaixo de 28% do faturamento.',
+     faixas:[[180000,15.50,0],[360000,18.00,4500],[720000,19.50,9900],[1800000,20.50,17100],[3600000,23.00,62100],[4800000,30.50,540000]],
+     rep:[[17.15,14.00],[17.15,17.00],[18.15,19.00],[19.15,21.00],[17.15,23.50],[20.00,0]]}
+  ];
+
+  var ANOS = [2026,2027,2028,2029,2030,2031,2032,2033];
+  var ANO_HINTS_SN = {
+    2026:'Ano de teste da CBS e do IBS, que não alcança o Simples Nacional. Para você, 2026 é igual a 2025.',
+    2027:'A CBS substitui PIS e COFINS. Dentro do DAS, essa parcela passa a ser CBS. O IBS entra só com 0,1%.',
+    2028:'Mesma regra de 2027: a parcela de CBS já vale cheia e o IBS ainda é simbólico.',
+    2029:'O ICMS e o ISS caem para 90% e o IBS cobre os 10% restantes.',
+    2030:'O ICMS e o ISS caem para 80% e o IBS cobre os outros 20%.',
+    2031:'O ICMS e o ISS caem para 70% e o IBS cobre os outros 30%.',
+    2032:'O ICMS e o ISS caem para 60% e o IBS cobre os outros 40%.',
+    2033:'Sistema completo: só CBS e IBS. ICMS e ISS deixam de existir.'
+  };
+  var ANO_HINTS_LP = {
+    2026:'Fase de teste: CBS de 0,9% e IBS de 0,1%, compensáveis com PIS/COFINS. Na prática, a carga não muda.',
+    2027:'A CBS já vale cheia e substitui PIS/COFINS. ICMS e ISS continuam 100%, como hoje.',
+    2028:'Mesma regra de 2027: CBS cheia, ICMS e ISS ainda 100%.',
+    2029:'ICMS e ISS caem para 90%. O IBS começa a aparecer, cobrindo os 10% restantes.',
+    2030:'ICMS e ISS caem para 80%. O IBS cobre os outros 20%.',
+    2031:'ICMS e ISS caem para 70%. O IBS cobre os outros 30%.',
+    2032:'ICMS e ISS caem para 60%. O IBS cobre os outros 40%.',
+    2033:'Sistema completo: só CBS e IBS. ICMS e ISS deixam de existir.'
+  };
+
+  var SETORES = [
+    {id:'comercio', label:'Comércio', pisCofins:3.65, icmsIss:10.6, issLabel:'ICMS de cerca de 10,6%'},
+    {id:'servicos', label:'Serviços', pisCofins:3.65, icmsIss:5, issLabel:'ISS'},
+    {id:'industria', label:'Indústria', pisCofins:9.25, icmsIss:12, issLabel:'ICMS de cerca de 12%'}
+  ];
+
+  var MIX = [0,25,50,75,100];
+  var REDUCOES = [
+    {id:'padrao', label:'Padrão', red:0, hint:'Alíquota cheia do IBS e da CBS.'},
+    {id:'r30', label:'−30%', red:0.30, hint:'Redução de 30%: profissões intelectuais regulamentadas.'},
+    {id:'r60', label:'−60%', red:0.60, hint:'Redução de 60%: saúde, educação, agro e outros serviços essenciais.'},
+    {id:'zero', label:'Alíquota zero', red:1, hint:'Alíquota zero: itens da cesta básica nacional.'}
+  ];
+
+  var CBS_REF = 8.8;   // estimativa CGIBS, não definitiva
+  var IBS_REF = 17.7;  // estimativa CGIBS, não definitiva
+
+  /* ---------------- helpers ---------------- */
+
+  function fmtBRL(n){
+    return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function fmtPct(n,dec){
+    return n.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:(dec===undefined?2:dec)})+'%';
+  }
+  function set(id,txt){ document.getElementById(id).textContent = txt; }
+  // valor em destaque e, embaixo dele, uma nota curta — evita linha larga demais
+  function setVal(id,valor,nota){
+    var el = document.getElementById(id);
+    el.textContent = valor;
+    if(nota){
+      var s = document.createElement('span');
+      s.className = 'note';
+      s.textContent = nota;
+      el.appendChild(s);
+    }
+  }
+  function parseValor(str){
+    var cleaned = String(str).replace(/[^\d,]/g,'').replace(',','.');
+    var n = parseFloat(cleaned);
+    return isNaN(n) ? 0 : n;
+  }
+  function chip(container,text,onClick,isOn){
+    var b = document.createElement('button');
+    b.type='button'; b.className='chip'+(isOn?' on':''); b.textContent=text;
+    b.addEventListener('click',onClick);
+    container.appendChild(b);
+    return b;
+  }
+  function renderChips(containerId,items,labelOf,isOnOf,onPick){
+    var c = document.getElementById(containerId);
+    c.innerHTML='';
+    items.forEach(function(it){
+      chip(c,labelOf(it),function(){ onPick(it); },isOnOf(it));
+    });
+  }
+  function byId(list,id){ return list.filter(function(x){return x.id===id})[0]; }
+
+  /* ---------------- cronograma ---------------- */
+
+  // quanto do IBS já está valendo no ano
+  function ibsShare(ano){
+    var m = {2029:0.10,2030:0.20,2031:0.30,2032:0.40,2033:1.0};
+    return m[ano] || 0;
+  }
+  // quanto ainda resta de ICMS e ISS no ano
+  function oldFactor(ano){
+    if(ano <= 2028) return 1;
+    var m = {2029:0.9,2030:0.8,2031:0.7,2032:0.6,2033:0};
+    return m[ano];
+  }
+  // alíquota do IVA cobrado por fora.
+  // Em 2027 e 2028 a CBS de referência é reduzida em 0,1 ponto e o IBS vale 0,1%.
+  function ivaRate(ano){
+    if(ano <= 2026) return 0;
+    if(ano <= 2028) return (CBS_REF - 0.1) + 0.1;
+    return CBS_REF + IBS_REF * ibsShare(ano);
+  }
+  // parcela do DAS que corresponde a CBS e IBS no ano: é o que o cliente consegue
+  // creditar se você fica no DAS, e o que sai da guia se você opta por fora.
+  function parcelaIVA(rep,ano){
+    if(ano <= 2026) return 0;
+    if(ano <= 2028) return rep[0]/100;
+    return rep[0]/100 + (rep[1]/100) * ibsShare(ano);
+  }
+
+  /* ---------------- estado ---------------- */
+
+  var mei = { fat:5000, ativ:'servicos', cli:'pj' };
+  var sn  = { fat:20000, anexo:'III', ano:2033, mix:50, insumos:0, red:'padrao' };
+  var lp  = { valor:1000, ano:2026, setor:'comercio', iss:5, red:'padrao' };
+
+  /* ---------------- MEI ---------------- */
+
+  function calcMEI(){
+    var a = byId(MEI_ATIV, mei.ativ);
+    var das = MEI_INSS + a.icms + a.iss;
+    var ano = mei.fat * 12;
+    var carga = mei.fat > 0 ? das/mei.fat*100 : 0;
+
+    set('mei-das', fmtBRL(das));
+    set('mei-das-sub', mei.fat > 0
+      ? 'Equivale a ' + fmtPct(carga) + ' do que você fatura por mês. Faturando mais, o valor fixo pesa menos.'
+      : 'Valor fixo, independente do quanto você fatura.');
+    set('mei-sobra', fmtBRL(Math.max(0, mei.fat - das)));
+
+    set('mei-ano', fmtBRL(ano));
+    var pct = ano/MEI_LIMITE*100;
+    var bar = document.getElementById('mei-bar');
+    bar.style.width = Math.min(100, pct).toFixed(1)+'%';
+    bar.className = pct > 100 ? 'bad' : (pct > 80 ? 'warn' : '');
+    var lim;
+    if(ano <= MEI_LIMITE){
+      lim = 'Nesse ritmo você usa ' + fmtPct(pct,0) + ' do limite de ' + fmtBRL(MEI_LIMITE) + '. Ainda cabem ' + fmtBRL(MEI_LIMITE-ano) + '.';
+    } else {
+      var excesso = ano - MEI_LIMITE;
+      lim = 'Passou do limite em ' + fmtBRL(excesso) + '. ' + (excesso/MEI_LIMITE*100 > 20
+        ? 'Acima de 20% de excesso, o desenquadramento retroage ao início do ano.'
+        : 'Até 20% de excesso, você paga a diferença e passa a ser ME em janeiro.');
+    }
+    set('mei-limite', lim);
+
+    var tb = document.getElementById('mei-tabela');
+    tb.innerHTML = '';
+    var linhas = [['INSS (sua aposentadoria)', MEI_INSS]];
+    if(a.icms) linhas.push(['ICMS — vira IBS na reforma', a.icms]);
+    if(a.iss)  linhas.push(['ISS — vira IBS na reforma', a.iss]);
+    linhas.push(['Total do DAS', das]);
+    linhas.forEach(function(l,i){
+      var tr = document.createElement('tr');
+      if(i === linhas.length-1) tr.className = 'total';
+      var td1 = document.createElement('td'); td1.textContent = l[0];
+      var td2 = document.createElement('td'); td2.className='num'; td2.textContent = fmtBRL(l[1]);
+      tr.appendChild(td1); tr.appendChild(td2); tb.appendChild(tr);
+    });
+
+    var facts = [
+      ['Seu DAS continua fixo.', 'A CBS e o IBS já estão dentro dele. Você não passa a cobrar 26,5% por fora do preço.'],
+      ['Em 2026 nada muda para você.', 'O ano de teste da CBS e do IBS não alcança o SIMEI.']
+    ];
+    if(mei.cli === 'pj'){
+      facts.push(['Sua nota quase não gera crédito.', 'A empresa que compra de você só aproveita o que foi pago de IBS e CBS no seu DAS — e ali há R$ 1,00 de ICMS e R$ 5,00 de ISS. Um fornecedor do regime normal passa crédito cheio, então alguns clientes PJ vão pedir desconto.']);
+      facts.push(['Nota fiscal para PJ segue obrigatória.', 'Para consumidor final, continua opcional.']);
+    } else {
+      facts.push(['Vendendo para consumidor final, isso não pesa contra você.', 'Seu cliente não aproveita crédito de ninguém, então a sua falta de crédito não tira a sua competitividade.']);
+    }
+    facts.push(['Tirar a CBS e o IBS do DAS não se aplica ao MEI.', 'A opção pelo regime regular foi aberta às ME e EPP do Simples, sem aplicação ao SIMEI no ciclo de 2026.']);
+    if(ano <= 40500){
+      facts.push(['Nesse faturamento, existe a figura do nanoempreendedor.', 'A pessoa física que fatura menos da metade do limite do MEI (cerca de R$ 40.500 por ano) e não se inscreve como MEI fica fora do campo do IBS e da CBS (art. 26, IV, da LC 214/2025). É outro enquadramento, não um desconto no seu DAS.']);
+    }
+
+    var fc = document.getElementById('mei-facts');
+    fc.innerHTML = '';
+    facts.forEach(function(f){
+      var d = document.createElement('div'); d.className='fact';
+      var inner = document.createElement('div');
+      var b = document.createElement('b'); b.textContent = f[0];
+      inner.appendChild(b); inner.appendChild(document.createTextNode(' '+f[1]));
+      d.appendChild(inner); fc.appendChild(d);
+    });
+
+    set('mei-ativ-hint', a.hint);
+    set('mei-cli-hint', byId(MEI_CLI, mei.cli).hint);
+  }
+
+  function renderMEI(){
+    renderChips('mei-ativ', MEI_ATIV, function(a){return a.label},
+      function(a){return a.id===mei.ativ}, function(a){ mei.ativ=a.id; renderMEI(); calcMEI(); });
+    renderChips('mei-cli', MEI_CLI, function(c){return c.label},
+      function(c){return c.id===mei.cli}, function(c){ mei.cli=c.id; renderMEI(); calcMEI(); });
+  }
+
+  /* ---------------- Simples ---------------- */
+
+  function faixaDe(anexo, rbt12){
+    for(var i=0;i<anexo.faixas.length;i++){
+      if(rbt12 <= anexo.faixas[i][0]) return i;
+    }
+    return anexo.faixas.length-1; // acima de R$ 4,8 milhões já não é Simples
+  }
+
+  function calcSN(){
+    var anexo = byId(ANEXOS, sn.anexo);
+    var F = sn.fat;
+    var rbt12 = F*12;
+    var fi = faixaDe(anexo, rbt12);
+    var faixa = anexo.faixas[fi];
+    var rep = anexo.rep[fi];
+
+    // alíquota efetiva do DAS
+    var aA = rbt12 > 0 ? ((rbt12*faixa[1]/100) - faixa[2]) / rbt12 : faixa[1]/100;
+    if(aA < 0) aA = 0;
+
+    var share = parcelaIVA(rep, sn.ano);          // parcela de CBS/IBS dentro do DAS
+    var aB = aA * (1 - share);                     // DAS que sobra fora do regime do DAS
+    var red = byId(REDUCOES, sn.red);
+    var t = ivaRate(sn.ano)/100 * (1 - red.red);   // IVA cobrado por fora
+    var I = sn.insumos;
+    var credIns = I * t/(1+t);
+    var mix = sn.mix/100;
+    var vigente = sn.ano >= 2027;
+
+    // cenário A: dentro do DAS
+    var dasA = F*aA;
+    var credCliA = dasA*share;
+    var sobraA = F - dasA - I;
+    var custoPjA = F - credCliA;
+
+    // cenário B: CBS e IBS por fora (regime híbrido)
+    var dasB = F*aB;
+    var ivaB = F*t;
+    var sobraB = F - dasB - I + credIns;
+    var precoB = F*(1+t);
+
+    // mesma sobra para você, preço ajustado
+    var pA = (1-aA) > 0 ? (sobraA + I)/(1-aA) : 0;
+    var pB = (1-aB) > 0 ? (sobraA + I - credIns)/(1-aB) : 0;
+    var cfA = pA, pjA = pA*(1 - aA*share);
+    var cfB = pB*(1+t), pjB = pB;
+    var mixA = mix*pjA + (1-mix)*cfA;
+    var mixB = mix*pjB + (1-mix)*cfB;
+
+    /* ---- resultado ---- */
+    var colA = document.getElementById('col-das');
+    var colB = document.getElementById('col-fora');
+    colA.classList.remove('pick','off');
+    colB.classList.remove('pick','off');
+    var badge = document.getElementById('sn-badge');
+    badge.className = 'badge';
+
+    if(!vigente){
+      badge.className = 'badge neutral';
+      badge.textContent = 'Ano de teste';
+      set('sn-verdict-k','Sua escolha em 2026');
+      set('sn-verdict','Não há escolha ainda');
+      set('sn-verdict-sub','A CBS e o IBS de teste de 2026 não alcançam o Simples Nacional, e a opção por apurá-los fora do DAS só produz efeito a partir de 2027. Seu DAS de hoje é de '+fmtBRL(dasA)+' por mês.');
+      colB.classList.add('off');
+    } else if(sobraA <= 0){
+      badge.className = 'badge neutral';
+      badge.textContent = 'Confira os números';
+      set('sn-verdict-k','Falta informação');
+      set('sn-verdict','As compras passam do faturamento');
+      set('sn-verdict-sub','Com '+fmtBRL(I)+' de insumos e '+fmtBRL(F)+' de faturamento por mês, não sobra nada para comparar os dois caminhos. Revise os valores ao lado.');
+    } else {
+      var dif = mixA - mixB;                       // positivo: por fora sai mais barato para seus clientes
+      var relevante = Math.abs(dif) > mixA*0.01;   // menos de 1% é empate técnico
+      if(!relevante){
+        badge.className = 'badge neutral';
+        badge.textContent = 'Empate técnico';
+        set('sn-verdict','Dá quase no mesmo');
+        set('sn-verdict-sub','Para você receber os mesmos '+fmtBRL(sobraA)+' por mês, seus clientes pagariam em média '+fmtBRL(mixA)+' no DAS e '+fmtBRL(mixB)+' por fora. A diferença é pequena: nesse caso pesa mais a simplicidade da guia única.');
+      } else if(dif > 0){
+        badge.textContent = 'Compensa sair';
+        set('sn-verdict','CBS e IBS por fora');
+        set('sn-verdict-sub','Para você receber os mesmos '+fmtBRL(sobraA)+' por mês, seus clientes pagariam em média '+fmtBRL(mixB)+' por fora, contra '+fmtBRL(mixA)+' no DAS. Pesa o crédito cheio que você passa a quem compra de você'+(I>0?' e o crédito dos seus insumos':'')+'.');
+        colB.classList.add('pick');
+      } else {
+        badge.textContent = 'Melhor ficar';
+        set('sn-verdict','Ficar no DAS');
+        set('sn-verdict-sub','Para você receber os mesmos '+fmtBRL(sobraA)+' por mês, seus clientes pagariam em média '+fmtBRL(mixA)+' no DAS, contra '+fmtBRL(mixB)+' por fora. Com muita venda para consumidor final, o IVA por fora encarece seu preço sem virar crédito para ninguém.');
+        colA.classList.add('pick');
+      }
+      set('sn-verdict-k','Melhor caminho em '+sn.ano);
+    }
+
+    // o que continua dentro da guia quando a CBS e o IBS saem
+    var restam = ['IRPJ','CSLL'];
+    if(anexo.id !== 'IV') restam.push('CPP');
+    if(anexo.id === 'II') restam.push('IPI');
+    if(rep[1] > 0 && oldFactor(sn.ano) > 0) restam.push(anexo.id==='I'||anexo.id==='II' ? 'ICMS' : 'ISS');
+    var restamTxt = restam.slice(0,-1).join(', ') + ' e ' + restam[restam.length-1];
+
+    setVal('a-das', fmtBRL(dasA), 'guia única, com tudo dentro');
+    setVal('a-aliq', fmtPct(aA*100));
+    setVal('a-cred-ins', 'nenhum', 'na guia única, a CBS e o IBS das suas compras viram custo');
+    setVal('a-sobra', fmtBRL(sobraA), 'o que entra, menos a guia e os insumos');
+    setVal('a-preco', fmtBRL(F), 'nada é somado por fora');
+    setVal('a-custo-pj', fmtBRL(vigente ? custoPjA : F),
+      vigente ? 'ele credita ' + fmtPct(share*aA*100) + ' do preço, o que você pagou de CBS/IBS no DAS' : null);
+
+    setVal('b-das', vigente ? fmtBRL(dasB) : '—',
+      vigente ? fmtPct(aB*100) + ' do faturamento — na guia ficam só ' + restamTxt : null);
+    setVal('b-iva', vigente ? fmtBRL(ivaB) : '—',
+      vigente ? fmtPct(t*100) + ' somados ao preço: o cliente paga, não sai do seu bolso' : null);
+    setVal('b-cred-ins', vigente && I > 0 ? fmtBRL(credIns) : '—',
+      vigente && I > 0 ? 'a CBS e o IBS das suas compras voltam para você' : null);
+    setVal('b-repasse', vigente ? fmtBRL(ivaB - credIns) : '—',
+      vigente ? 'o que você cobrou do cliente menos o crédito das compras' : null);
+    setVal('b-sobra', vigente ? fmtBRL(sobraB) : '—',
+      vigente ? 'o que entra, menos a guia, os insumos e o repasse' : null);
+    setVal('b-preco', vigente ? fmtBRL(precoB) : '—', vigente ? 'o seu preço mais a CBS e o IBS' : null);
+    setVal('b-custo-pj', vigente ? fmtBRL(F) : '—', vigente ? 'ele credita toda a CBS e o IBS' : null);
+
+    set('m-cf-a', fmtBRL(cfA));
+    set('m-pj-a', fmtBRL(pjA));
+    set('m-mix-a', fmtBRL(mixA));
+    set('m-cf-b', vigente ? fmtBRL(cfB) : '—');
+    set('m-pj-b', vigente ? fmtBRL(pjB) : '—');
+    set('m-mix-b', vigente ? fmtBRL(mixB) : '—');
+
+    /* ---- textos de apoio ---- */
+    var nomeFaixa = ['1ª','2ª','3ª','4ª','5ª','6ª'][fi];
+    set('sn-fat-hint','Usamos 12× esse valor como sua receita dos últimos 12 meses: '+fmtBRL(rbt12)+', que cai na '+nomeFaixa+' faixa do anexo '+anexo.id+'.');
+    set('sn-anexo-hint', anexo.nota);
+    set('sn-ano-hint', ANO_HINTS_SN[sn.ano]);
+    set('sn-red-hint', byId(REDUCOES, sn.red).hint);
+
+    var how;
+    if(!vigente){
+      how = 'dentro do DAS, a parcela que hoje é PIS/COFINS passa a ser CBS, e a de ICMS/ISS vira IBS aos poucos, até 2033. A alíquota do seu anexo não muda por isso. Escolha 2027 ou um ano seguinte para comparar a guia única com a apuração por fora.';
+    } else {
+      how = 'na '+nomeFaixa+' faixa do anexo '+anexo.id+', '+fmtPct(share*100,1)+' do seu DAS já é CBS e IBS em '+sn.ano+'. Ficando na guia única, é esse pedaço — '+fmtBRL(credCliA)+' por mês — que seu cliente empresa consegue creditar, e nada mais. Optando por apurar por fora, essa parcela sai do DAS, que cai para '+fmtBRL(dasB)+', você cobra '+fmtPct(t*100)+' por fora do preço, credita o IBS e a CBS das suas compras e passa crédito cheio para quem compra de você.';
+      if(fi === 5){
+        how += ' Nessa faixa de faturamento o ICMS e o ISS já saem do DAS por conta do sublimite, mesmo sem opção.';
+      }
+    }
+    var howEl = document.getElementById('sn-how');
+    howEl.innerHTML = '';
+    var hb = document.createElement('b'); hb.textContent = 'Como funciona:';
+    howEl.appendChild(hb);
+    howEl.appendChild(document.createTextNode(' '+how));
+  }
+
+  function renderSN(){
+    renderChips('sn-anexo', ANEXOS, function(a){return a.label},
+      function(a){return a.id===sn.anexo}, function(a){ sn.anexo=a.id; renderSN(); calcSN(); });
+    renderChips('sn-ano', ANOS, function(a){return String(a)},
+      function(a){return a===sn.ano}, function(a){ sn.ano=a; renderSN(); calcSN(); });
+    renderChips('sn-mix', MIX, function(m){return m+'%'},
+      function(m){return m===sn.mix}, function(m){ sn.mix=m; renderSN(); calcSN(); });
+    renderChips('sn-red', REDUCOES, function(r){return r.label},
+      function(r){return r.id===sn.red}, function(r){ sn.red=r.id; renderSN(); calcSN(); });
+  }
+
+  /* ---------------- fora do Simples ---------------- */
+
+  function calcLP(){
+    var setor = byId(SETORES, lp.setor);
+    var icmsIss = lp.setor==='servicos' ? lp.iss : setor.icmsIss;
+    var oldFull = setor.pisCofins + icmsIss;   // carga de hoje, por dentro
+
+    var D, Fraw;
+    if(lp.ano === 2026){
+      D = oldFull;                             // nada mudou ainda
+      Fraw = 0;
+    } else if(lp.ano <= 2028){
+      D = icmsIss;                             // PIS/COFINS já virou CBS
+      Fraw = ivaRate(lp.ano);
+    } else {
+      D = icmsIss * oldFactor(lp.ano);
+      Fraw = ivaRate(lp.ano);
+    }
+
+    var F = Fraw * (1 - byId(REDUCOES, lp.red).red);
+    var N = lp.valor;
+    var base = N/(1 - D/100);
+    var price = base*(1 + F/100);
+    var precoHoje = N/(1 - oldFull/100);
+    var diff = price - precoHoje;
+
+    set('lp-ano-label','Preço de venda estimado em '+lp.ano);
+    set('lp-preco-final', fmtBRL(price));
+    set('lp-preco-sub','para receber '+fmtBRL(N));
+    set('lp-tributos-total', fmtBRL(price-N));
+    set('lp-carga-pct', fmtPct(D+F)+' de carga combinada');
+    set('lp-preco-hoje', fmtBRL(precoHoje));
+    set('lp-diferenca', Math.abs(diff) < 0.005
+      ? 'sem diferença nesse ano'
+      : (diff>0?'+':'−')+fmtBRL(Math.abs(diff))+' de diferença');
+
+    set('lp-r-iva', fmtPct(F));
+    set('lp-v-iva', fmtBRL(base*F/100));
+    set('lp-r-old', fmtPct(D));
+    set('lp-v-old', fmtBRL(base-N));
+    set('lp-v-net', fmtBRL(N));
+
+    set('lp-ano-hint', ANO_HINTS_LP[lp.ano]);
+    set('lp-enquadra-hint', byId(REDUCOES, lp.red).hint);
+    set('lp-setor-hint','Carga de hoje: PIS/COFINS '+fmtPct(setor.pisCofins)+' + '+(lp.setor==='servicos'?('ISS '+fmtPct(lp.iss)):setor.issLabel)+'. Total por dentro: '+fmtPct(oldFull)+'.');
+  }
+
+  function renderLP(){
+    renderChips('lp-anos', ANOS, function(a){return String(a)},
+      function(a){return a===lp.ano}, function(a){ lp.ano=a; renderLP(); calcLP(); });
+    renderChips('lp-setores', SETORES, function(s){return s.label},
+      function(s){return s.id===lp.setor}, function(s){ lp.setor=s.id; renderLP(); calcLP(); });
+    renderChips('lp-enquadra', REDUCOES, function(r){return r.label},
+      function(r){return r.id===lp.red}, function(r){ lp.red=r.id; renderLP(); calcLP(); });
+    document.getElementById('lp-iss-toggle').hidden = lp.setor !== 'servicos';
+  }
+
+  document.querySelectorAll('#lp-iss-toggle button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      lp.iss = Number(btn.getAttribute('data-iss'));
+      document.querySelectorAll('#lp-iss-toggle button').forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+      calcLP();
+    });
+  });
+
+  /* ---------------- abas ---------------- */
+
+  var TABS = [
+    {tab:'tab-mei', panel:'panel-mei'},
+    {tab:'tab-simples', panel:'panel-simples'},
+    {tab:'tab-lp', panel:'panel-lp'}
+  ];
+  function showTab(panelId){
+    TABS.forEach(function(t){
+      var on = t.panel === panelId;
+      document.getElementById(t.tab).setAttribute('aria-selected', on ? 'true' : 'false');
+      document.getElementById(t.panel).hidden = !on;
+    });
+  }
+  TABS.forEach(function(t){
+    document.getElementById(t.tab).addEventListener('click', function(){ showTab(t.panel); });
+  });
+
+  document.getElementById('mei-to-simples').addEventListener('click', function(){
+    sn.fat = mei.fat;
+    document.getElementById('sn-fat').value = sn.fat.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    calcSN();
+    showTab('panel-simples');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  /* ---------------- inputs ---------------- */
+
+  function bindAmount(id, onChange){
+    var el = document.getElementById(id);
+    el.addEventListener('input', function(){ onChange(parseValor(el.value)); });
+    el.addEventListener('blur', function(){
+      el.value = parseValor(el.value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    });
+  }
+  bindAmount('mei-fat', function(v){ mei.fat=v; calcMEI(); });
+  bindAmount('sn-fat', function(v){ sn.fat=v; calcSN(); });
+  bindAmount('sn-insumos', function(v){ sn.insumos=v; calcSN(); });
+  bindAmount('lp-valor', function(v){ lp.valor=v; calcLP(); });
+
+  renderMEI(); calcMEI();
+  renderSN();  calcSN();
+  renderLP();  calcLP();
+})();
+</script>
