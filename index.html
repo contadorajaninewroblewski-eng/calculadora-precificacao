@@ -858,7 +858,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
       set('cr-liq-a', fmtBRL(V-credA));
       set('cr-liq-b', fmtBRL(V));
       var maxNota = (1-cPct) > 0 ? V/(1-cPct) : 0;
-      set('cr-how', 'Na negociação: o fornecedor do DAS deixa de te dar ' + fmtBRL(credB-credA) + ' de crédito a cada ' + fmtBRL(V) + ' de serviço em relação a um fornecedor do regime regular. Para o seu custo líquido ficar igual ao de um fornecedor regular que cobra ' + fmtBRL(V) + ' sem IVA, a nota do fornecedor do DAS pode ser de até ' + fmtBRL(maxNota) + '. Acima disso, você paga mais caro. O crédito só vale com a CBS e o IBS destacados na nota e se limita ao que o fornecedor de fato recolheu no DAS (art. 47, § 9º, II, da LC 214/2025).');
+      set('cr-how', 'Na negociação: o fornecedor do DAS deixa de te dar ' + fmtBRL(credB-credA) + ' de crédito a cada ' + fmtBRL(V) + ' de serviço em relação a um fornecedor do regime regular. Para o seu custo líquido ficar igual ao de um fornecedor regular que cobra ' + fmtBRL(V) + ' sem IVA, a nota do fornecedor do DAS pode ser de até ' + fmtBRL(maxNota) + '. Acima disso, você paga mais caro. O crédito exige documento fiscal eletrônico idôneo (art. 47, § 1º, II) e, para fornecedor no DAS, corresponde ao montante equivalente ao devido por meio do regime (art. 47, § 9º, II, da LC 214/2025).');
     } else {
       set('cr-sub', 'O ano de teste da CBS e do IBS não alcança o Simples Nacional. Escolha 2027 ou um ano seguinte para ver o crédito.');
       ['nota','cred','pct','liq'].forEach(function(k){ set('cr-'+k+'-a','—'); set('cr-'+k+'-b','—'); });
