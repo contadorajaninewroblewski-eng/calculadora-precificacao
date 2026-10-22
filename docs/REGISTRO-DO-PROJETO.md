@@ -1,6 +1,6 @@
 # Registro do projeto: calculadora de precificação na reforma tributária
 
-Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026.
+Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026 (atualizado no mesmo dia, após a limpeza das branches).
 
 ## Onde está tudo
 
@@ -39,6 +39,7 @@ O valor máximo da nota do fornecedor do DAS usa a premissa de que o fornecedor 
 - **Não registrar domínio próprio** (a decisão foi não pagar por um). O link continua sendo o endereço do GitHub Pages.
 - Link para a bio do Instagram: https://contadorajaninewroblewski-eng.github.io/calculadora-precificacao/
 - Aviso de que a simulação é educativa e sem validade fiscal permanece na página.
+- Em 22/10/2026, as branches já mescladas (`feature/credito-lucro-real`, `fix/previa-link` e `docs/registro-do-projeto`) foram apagadas do GitHub. Sobrou só a `main`. Os PRs #1, #2 e #3 continuam no histórico e permitem restaurar qualquer branch.
 
 ## Pendente ou não decidido
 
@@ -51,7 +52,6 @@ O valor máximo da nota do fornecedor do DAS usa a premissa de que o fornecedor 
 - **Prévia do link no WhatsApp:** não foi possível testar daqui. O WhatsApp guarda a prévia de cada link por um tempo. Se mostrar só o domínio, enviar o link com `?v=2` no final.
 - **Teste em celular:** a página foi testada apenas no computador.
 - **Nome do repositório:** foi levantada a possibilidade de renomear para um endereço mais curto (por exemplo `calculadora`), mas não foi decidido. O GitHub redireciona o endereço antigo.
-- **Branches já mescladas** (`feature/credito-lucro-real`, `fix/previa-link`): continuam no GitHub. Podem ser apagadas a qualquer momento sem perda.
 - **Sem testes automatizados:** a verificação foi feita abrindo a página e conferindo os valores.
 
 ## Fontes consultadas
