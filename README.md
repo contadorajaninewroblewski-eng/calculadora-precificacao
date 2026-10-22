@@ -38,6 +38,10 @@ Na aba do Simples Nacional, o bloco "Se você compra desse fornecedor e é do lu
 
 Teto de 5% do ISS na 5ª faixa, sublimite estadual, fator R (o anexo é escolhido na mão), IRPJ, CSLL e CPP recolhidos fora do DAS, Imposto Seletivo, regimes específicos e particularidades estaduais e municipais.
 
+## Histórico, decisões e pendências
+
+O contexto do projeto, as decisões tomadas e o que ficou em aberto estão em [docs/REGISTRO-DO-PROJETO.md](docs/REGISTRO-DO-PROJETO.md).
+
 ## Aviso
 
 Simulação simplificada e educativa, sem validade fiscal. Não substitui a análise de um profissional sobre os números da empresa.
