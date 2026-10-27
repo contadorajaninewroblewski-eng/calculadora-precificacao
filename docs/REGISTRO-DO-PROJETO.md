@@ -1,6 +1,6 @@
 # Registro do projeto: calculadora de precificação na reforma tributária
 
-Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026 (atualizado no mesmo dia, após a limpeza das branches).
+Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026, atualizado em 27/10/2026 (saída da aba do MEI e campo de RBT12).
 
 ## Onde está tudo
 
@@ -19,11 +19,19 @@ Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, pa
 5. **`<meta charset="utf-8">`** acrescentado, porque sem ele os acentos quebravam em servidores que não informam a codificação.
 6. **Tags Open Graph** (título, descrição, endereço) acrescentadas para a prévia do link no WhatsApp mostrar "Sua Empresa na Reforma".
 
+## Alterações de 27/10/2026
+
+1. **Aba do MEI removida.** O DAS do MEI é valor fixo e a reforma não muda isso, então a aba não acrescentava nada. Saíram o painel, os dados, as funções e o CSS que só ela usava. A página abre agora na aba do Simples Nacional e tem duas abas.
+2. **Campo de RBT12.** A aba do Simples passou a pedir a receita bruta dos últimos 12 meses, em vez do faturamento médio por mês. É o número que o contador tem em mãos e é o que define a faixa. A média mensal, usada nas contas por mês, passou a ser a RBT12 dividida por doze.
+3. **Valor da nota.** O campo do bloco do comprador virou "Valor da nota do fornecedor", com o texto ajustado: para fornecedor no DAS, a nota é o próprio preço, porque ele não cobra CBS e IBS por fora. O bloco passou a falar em lucro real **ou presumido**, já que os dois apuram CBS e IBS pelo regime regular.
+
+Conferido depois da mudança: anexo III com RBT12 de R$ 480.000 em 2027 mantém alíquota efetiva de 9,83% e crédito de R$ 163,10 por nota de R$ 10.000 (1,63%); anexo I com RBT12 de R$ 180.000 em 2033 dá 4% de alíquota efetiva e 1,98% de crédito.
+
 ## Como o crédito é calculado
 
 Alíquota efetiva do DAS × parcela de CBS/IBS da faixa. A parcela de CBS é a soma de COFINS e PIS/Pasep da repartição da faixa.
 
-Exemplo: anexo III, faturamento de R$ 40.000 por mês (RBT12 de R$ 480.000, 3ª faixa), ano de 2027.
+Exemplo: anexo III, RBT12 de R$ 480.000 (3ª faixa, o que dá R$ 40.000 por mês), ano de 2027.
 - Alíquota efetiva: (480.000 × 13,5% − 17.640) ÷ 480.000 = 9,83%
 - Parcela de CBS na 3ª faixa: 13,64% + 2,96% = 16,6%
 - Crédito: 9,83% × 16,6% = 1,63% do preço, ou R$ 652,38 em R$ 40.000 de serviço.

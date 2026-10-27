@@ -2,10 +2,9 @@
 
 Simulador de uma página só, que abre direto no navegador, para enxergar o efeito da transição da reforma tributária sobre a guia, sobre o preço e sobre o que sobra para a empresa, ano a ano, de 2026 a 2033.
 
-São três abas, uma por regime:
+São duas abas, uma por regime:
 
-- **MEI** — o DAS fixo do ano, a carga efetiva sobre o faturamento, o limite anual de R$ 81.000 e o ponto que costuma passar batido: a nota do MEI quase não gera crédito para um cliente pessoa jurídica.
-- **Simples Nacional** — compara ficar com a CBS e o IBS dentro do DAS com apurá-los por fora, pelo regime regular (art. 41, § 3º, da LC 214/2025). Entram o faturamento médio, o anexo, o ano, a fatia de clientes PJ, os insumos tributados e a redução de alíquota da atividade.
+- **Simples Nacional** — compara ficar com a CBS e o IBS dentro do DAS com apurá-los por fora, pelo regime regular (art. 41, § 3º, da LC 214/2025). Entram a receita bruta dos últimos 12 meses (RBT12), o anexo, o ano, a fatia de clientes PJ, os insumos tributados e a redução de alíquota da atividade. A mesma aba serve para avaliar um fornecedor do Simples: informando a RBT12 dele e o valor da nota, ela mostra quanto aquela nota gera de crédito.
 - **Fora do Simples** — quanto cobrar, no lucro presumido ou real, para manter o valor líquido desejado enquanto o ICMS e o ISS dão lugar ao IBS.
 
 ## Como usar
@@ -14,7 +13,7 @@ Abra o arquivo `index.html` no navegador. Não precisa de servidor nem de instal
 
 ## Metodologia
 
-- A alíquota efetiva do DAS sai das tabelas dos anexos I a V da Lei Complementar 123/2006, usando doze vezes o faturamento médio informado como receita bruta dos últimos doze meses.
+- A alíquota efetiva do DAS sai das tabelas dos anexos I a V da Lei Complementar 123/2006, a partir da receita bruta dos últimos doze meses (RBT12) informada. A média mensal, usada nos valores por mês, é essa receita dividida por doze.
 - A parcela de CBS e IBS dentro do DAS, em cada ano, é a parcela de PIS/COFINS (que vira CBS em 2027) somada à de ICMS/ISS multiplicada pelo avanço do IBS: 10% em 2029, 20% em 2030, 30% em 2031, 40% em 2032 e 100% em 2033. É o crédito que o cliente do regime regular consegue aproveitar quando o fornecedor fica na guia única, limitado ao que foi efetivamente pago (art. 47, § 9º, II, da LC 214/2025), e é também a parcela que sai da guia na opção pelo regime regular.
 - A CBS e o IBS cobrados por fora usam 8,7% de CBS mais 0,1% de IBS em 2027 e 2028 (a alíquota de referência da CBS é reduzida em 0,1 ponto percentual nesses dois anos) e, de 2029 em diante, 8,8% de CBS mais 17,7% de IBS proporcionais ao avanço da transição. Em 2026, a fase de teste não alcança o Simples Nacional.
 - O crédito sobre insumos, no cenário de apuração por fora, é a parcela de CBS e IBS embutida no valor pago aos fornecedores.
@@ -30,9 +29,11 @@ O texto compilado não traz anexo novo nem alteração nas alíquotas e reparti�
 
 Mudanças de regra, a partir de 1º/1/2027, vêm das Resoluções CGSN 190 e 191/2026, que se somam à 183/2025 (fonte: Receita Federal, agosto de 2026). A opção pelo regime regular de CBS e IBS (o "Simples híbrido") tem janelas de 1º a 30/9/2026, para valer de janeiro a junho de 2027, e de 1º a 31/3/2027, para o segundo semestre. Há notícias de prorrogação do prazo de 2026, então confirme a data no Portal do Simples Nacional antes de orientar um cliente.
 
-## Aba do comprador no lucro real
+## Crédito gerado pela nota de um fornecedor do Simples
 
-Na aba do Simples Nacional, o bloco "Se você compra desse fornecedor e é do lucro real" mostra quanto de crédito de CBS e IBS a nota do fornecedor gera para quem compra no lucro real, em reais e em percentual do preço, comparando fornecedor no DAS e fornecedor que apura por fora. O crédito do fornecedor no DAS é a alíquota efetiva do DAS multiplicada pela parcela de CBS e IBS da faixa. Os dados do fornecedor (anexo, faturamento, ano) são os campos da própria aba.
+Na aba do Simples Nacional, o bloco "Se você compra desse fornecedor e apura no lucro real ou presumido" mostra quanto de crédito de CBS e IBS a nota do fornecedor gera para quem compra, em reais e em percentual do preço, comparando fornecedor no DAS e fornecedor que apura por fora. O crédito do fornecedor no DAS é a alíquota efetiva do DAS multiplicada pela parcela de CBS e IBS da faixa. Os dados do fornecedor (anexo, RBT12, ano) são os campos da própria aba, e o valor da nota é informado no próprio bloco.
+
+Exemplo: fornecedor do anexo III com RBT12 de R$ 480.000 (3ª faixa, alíquota efetiva de 9,83%), em 2027. Uma nota de R$ 10.000 gera R$ 163,10 de crédito, ou 1,63% do preço. Se esse fornecedor apurasse CBS e IBS por fora, a mesma nota geraria R$ 880,00.
 
 ## O que o cálculo não considera
 

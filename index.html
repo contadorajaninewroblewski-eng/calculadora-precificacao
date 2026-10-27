@@ -1,12 +1,12 @@
 <meta charset="utf-8">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Sua Empresa na Reforma</title>
-<meta name="description" content="Simulador da reforma tributária para MEI, Simples Nacional e lucro presumido ou real: veja o efeito na guia, no preço e no crédito de CBS e IBS, ano a ano, de 2026 a 2033.">
+<meta name="description" content="Simulador da reforma tributária para o Simples Nacional e para o lucro presumido ou real: veja o efeito na guia, no preço e no crédito de CBS e IBS, ano a ano, de 2026 a 2033.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="ASSESCONT Serviços Contábeis">
 <meta property="og:title" content="Sua Empresa na Reforma">
-<meta property="og:description" content="Simulador da reforma tributária para MEI, Simples Nacional e lucro presumido ou real: veja o efeito na guia, no preço e no crédito de CBS e IBS, ano a ano, de 2026 a 2033.">
+<meta property="og:description" content="Simulador da reforma tributária para o Simples Nacional e para o lucro presumido ou real: veja o efeito na guia, no preço e no crédito de CBS e IBS, ano a ano, de 2026 a 2033.">
 <meta property="og:url" content="https://contadorajaninewroblewski-eng.github.io/calculadora-precificacao/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,12 +125,6 @@ label.lbl{display:block;font-weight:700;font-size:13px;letter-spacing:.3px;margi
 .mini .v.warn{color:var(--warn)}
 .mini .d{font-size:12.5px;margin-top:4px;color:var(--fg-faint);line-height:1.45}
 
-/* barra do limite do MEI */
-.bar{height:9px;border-radius:20px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:12px}
-.bar i{display:block;height:100%;border-radius:20px;background:var(--good);transition:width .25s}
-.bar i.warn{background:var(--warn)}
-.bar i.bad{background:var(--bad)}
-
 /* comparação dentro x fora do DAS */
 .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 @media (max-width:760px){.vs{grid-template-columns:1fr}}
@@ -162,20 +156,8 @@ tbody tr+tr td{border-top:1px solid var(--line)}
 tbody tr.total td{font-weight:800;color:var(--gold-hi)}
 td.num{font-variant-numeric:tabular-nums;text-align:right}
 
-.facts{display:grid;gap:12px;margin-top:16px}
-.fact{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--fg-dim)}
-.fact b{color:var(--fg)}
-.fact:before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-top:7px}
-
 .how{margin-top:20px;font-size:13.5px;line-height:1.6;color:var(--fg-dim)}
 .how b{color:var(--fg)}
-
-.ghost-btn{
-  appearance:none;margin-top:16px;border:1.5px solid var(--line);background:var(--panel);
-  color:var(--gold-hi);font-family:inherit;font-weight:800;font-size:13.5px;
-  padding:12px 18px;border-radius:30px;cursor:pointer;
-}
-.ghost-btn:hover{border-color:var(--gold)}
 
 .legal{margin-top:28px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;line-height:1.6;color:var(--fg-faint)}
 .legal b{color:var(--fg-dim)}
@@ -204,83 +186,20 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   </header>
 
   <div class="tabs" role="tablist" aria-label="Regime">
-    <button class="tab" id="tab-mei" role="tab" aria-selected="true" aria-controls="panel-mei">MEI</button>
-    <button class="tab" id="tab-simples" role="tab" aria-selected="false" aria-controls="panel-simples">Simples Nacional</button>
+    <button class="tab" id="tab-simples" role="tab" aria-selected="true" aria-controls="panel-simples">Simples Nacional</button>
     <button class="tab" id="tab-lp" role="tab" aria-selected="false" aria-controls="panel-lp">Fora do Simples</button>
   </div>
 
-  <!-- ============ MEI ============ -->
-  <div id="panel-mei" role="tabpanel" aria-labelledby="tab-mei">
-    <p class="lead">O DAS do MEI é um valor fixo por mês, e a reforma não muda isso. <b>O que muda é o crédito que a sua nota passa para quem compra de você.</b></p>
-    <div class="grid">
-      <div class="card">
-        <div class="field">
-          <label class="lbl" for="mei-fat">Quanto você fatura por mês, em média</label>
-          <div class="amount-box">
-            <span>R$</span>
-            <input id="mei-fat" inputmode="decimal" value="5.000,00">
-          </div>
-          <div class="hint">Use a média dos seus meses. O limite do MEI é de R$ 81.000,00 por ano.</div>
-        </div>
-
-        <div class="field">
-          <label class="lbl">O que você faz</label>
-          <div class="chips" id="mei-ativ"></div>
-          <div class="hint" id="mei-ativ-hint"></div>
-        </div>
-
-        <div class="field">
-          <label class="lbl">Seus clientes</label>
-          <div class="chips" id="mei-cli"></div>
-          <div class="hint" id="mei-cli-hint"></div>
-        </div>
-      </div>
-
-      <div>
-        <div class="result-card">
-          <div class="k">Seu DAS por mês</div>
-          <div class="v" id="mei-das">R$ 0,00</div>
-          <div class="sub" id="mei-das-sub">—</div>
-        </div>
-
-        <div class="mini-cards">
-          <div class="mini">
-            <div class="k">Sobra do faturamento, por mês</div>
-            <div class="v good" id="mei-sobra">R$ 0,00</div>
-            <div class="d">Antes dos seus custos. O DAS do MEI não é percentual: é valor fixo.</div>
-          </div>
-          <div class="mini">
-            <div class="k">Projeção no ano</div>
-            <div class="v" id="mei-ano">R$ 0,00</div>
-            <div class="d" id="mei-limite">—</div>
-            <div class="bar"><i id="mei-bar" style="width:0%"></i></div>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Dentro do seu DAS fixo</th><th class="num">Valor</th></tr></thead>
-            <tbody id="mei-tabela"></tbody>
-          </table>
-        </div>
-
-        <div class="facts" id="mei-facts"></div>
-
-        <button class="ghost-btn" id="mei-to-simples" type="button">Ver como ficaria no Simples →</button>
-      </div>
-    </div>
-  </div>
-
   <!-- ============ SIMPLES ============ -->
-  <div id="panel-simples" role="tabpanel" aria-labelledby="tab-simples" hidden>
-    <p class="lead">No Simples, a CBS e o IBS entram <b>dentro</b> do DAS. A partir de 2027 você pode escolher tirá-los da guia e apurá-los como uma empresa do regime normal — é essa conta que este simulador faz.</p>
+  <div id="panel-simples" role="tabpanel" aria-labelledby="tab-simples">
+    <p class="lead">No Simples, a CBS e o IBS entram <b>dentro</b> do DAS. A partir de 2027 você pode escolher tirá-los da guia e apurá-los como uma empresa do regime normal — é essa conta que este simulador faz. Vale para a sua empresa e também para um fornecedor que você queira avaliar.</p>
     <div class="grid">
       <div class="card">
         <div class="field">
-          <label class="lbl" for="sn-fat">Quanto você fatura por mês, em média</label>
+          <label class="lbl" for="sn-rbt12">Faturamento dos últimos 12 meses (RBT12)</label>
           <div class="amount-box">
             <span>R$</span>
-            <input id="sn-fat" inputmode="decimal" value="20.000,00">
+            <input id="sn-rbt12" inputmode="decimal" value="240.000,00">
           </div>
           <div class="hint" id="sn-fat-hint">—</div>
         </div>
@@ -356,16 +275,16 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
         </div>
 
         <div class="result-card" id="cr-card">
-          <div class="k">Se você compra desse fornecedor e é do lucro real</div>
+          <div class="k">Se você compra desse fornecedor e apura no lucro real ou presumido</div>
           <div class="v" id="cr-titulo">—</div>
           <div class="sub" id="cr-sub">—</div>
           <div class="field" style="margin-top:14px">
-            <label class="lbl" for="cr-valor">Valor do serviço que você vai contratar</label>
+            <label class="lbl" for="cr-valor">Valor da nota do fornecedor</label>
             <div class="amount-box">
               <span>R$</span>
               <input id="cr-valor" inputmode="decimal" value="10.000,00">
             </div>
-            <div class="hint">Preço do serviço, sem a CBS e o IBS que seriam cobrados por fora. É sobre ele que se calcula o crédito.</div>
+            <div class="hint">O valor que vem na nota de um fornecedor do Simples. Como ele não cobra CBS e IBS por fora, a nota é o próprio preço — e é sobre esse valor que o crédito é calculado.</div>
           </div>
           <div class="table-wrap">
             <table>
@@ -480,7 +399,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   </div>
 
   <div class="legal">
-    Simulação simplificada e educativa, com base na Lei Complementar 214/2025 (art. 41, § 3º, que permite apurar IBS e CBS fora do DAS, e art. 47, § 9º, II, sobre o crédito de quem compra de optante do Simples), na Lei Complementar 227/2026, nas Resoluções CGSN 190 e 191/2026, nas tabelas dos anexos da Lei Complementar 123/2006 (conferidas com o texto compilado em 20/10/2026) e em estimativas públicas da alíquota de referência (CGIBS, 26,5% somados — 8,8% de CBS e 17,7% de IBS). <b>A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026</b> — nenhum número aqui é definitivo. O cálculo usa 12× o seu mês médio como receita dos últimos 12 meses, trata o crédito de insumos como a parcela de CBS/IBS embutida no que você paga, e não considera IRPJ/CSLL/CPP fora do DAS, sublimite estadual, o teto de 5% do ISS na 5ª faixa, Imposto Seletivo, regimes específicos nem particularidades estaduais e municipais. Não substitui análise profissional.
+    Simulação simplificada e educativa, com base na Lei Complementar 214/2025 (art. 41, § 3º, que permite apurar IBS e CBS fora do DAS, e art. 47, § 9º, II, sobre o crédito de quem compra de optante do Simples), na Lei Complementar 227/2026, nas Resoluções CGSN 190 e 191/2026, nas tabelas dos anexos da Lei Complementar 123/2006 (conferidas com o texto compilado em 20/10/2026) e em estimativas públicas da alíquota de referência (CGIBS, 26,5% somados — 8,8% de CBS e 17,7% de IBS). <b>A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026</b> — nenhum número aqui é definitivo. O cálculo parte da receita bruta dos últimos 12 meses informada e da média mensal dela, trata o crédito de insumos como a parcela de CBS/IBS embutida no que você paga, e não considera IRPJ/CSLL/CPP fora do DAS, sublimite estadual, o teto de 5% do ISS na 5ª faixa, Imposto Seletivo, regimes específicos nem particularidades estaduais e municipais. Não substitui análise profissional.
   </div>
 
   <footer>ASSESCONT Serviços Contábeis · simulador educativo, sem validade fiscal</footer>
@@ -491,19 +410,6 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   'use strict';
 
   /* ---------------- dados ---------------- */
-
-  // DAS fixo do MEI em 2026 (INSS de 5% sobre o salário mínimo de R$ 1.621,00 = R$ 81,05)
-  var MEI_INSS = 81.05;
-  var MEI_ATIV = [
-    {id:'comercio', label:'Comércio ou indústria', icms:1, iss:0, hint:'DAS de R$ 82,05: R$ 81,05 de INSS e R$ 1,00 de ICMS.'},
-    {id:'servicos', label:'Serviços', icms:0, iss:5, hint:'DAS de R$ 86,05: R$ 81,05 de INSS e R$ 5,00 de ISS.'},
-    {id:'ambos', label:'Comércio e serviços', icms:1, iss:5, hint:'DAS de R$ 87,05: R$ 81,05 de INSS, R$ 1,00 de ICMS e R$ 5,00 de ISS.'}
-  ];
-  var MEI_CLI = [
-    {id:'pf', label:'Consumidor final', hint:'Quem compra de você não aproveita crédito de tributo, então a reforma não mexe no seu preço.'},
-    {id:'pj', label:'Outras empresas', hint:'Aqui está o ponto de atenção: a nota do MEI quase não gera crédito para a empresa que compra de você.'}
-  ];
-  var MEI_LIMITE = 81000;
 
   // Conferido em 20/10/2026 com o texto compilado da LC 123/2006 (Planalto, redação da LC 155/2016).
   // Anexos da LC 123/2006: faixas (limite de RBT12, alíquota nominal, dedução)
@@ -636,89 +542,8 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
 
   /* ---------------- estado ---------------- */
 
-  var mei = { fat:5000, ativ:'servicos', cli:'pj' };
-  var sn  = { fat:20000, anexo:'III', ano:2033, mix:50, insumos:0, red:'padrao', compra:10000 };
+  var sn  = { rbt12:240000, anexo:'III', ano:2033, mix:50, insumos:0, red:'padrao', compra:10000 };
   var lp  = { valor:1000, ano:2026, setor:'comercio', iss:5, red:'padrao' };
-
-  /* ---------------- MEI ---------------- */
-
-  function calcMEI(){
-    var a = byId(MEI_ATIV, mei.ativ);
-    var das = MEI_INSS + a.icms + a.iss;
-    var ano = mei.fat * 12;
-    var carga = mei.fat > 0 ? das/mei.fat*100 : 0;
-
-    set('mei-das', fmtBRL(das));
-    set('mei-das-sub', mei.fat > 0
-      ? 'Equivale a ' + fmtPct(carga) + ' do que você fatura por mês. Faturando mais, o valor fixo pesa menos.'
-      : 'Valor fixo, independente do quanto você fatura.');
-    set('mei-sobra', fmtBRL(Math.max(0, mei.fat - das)));
-
-    set('mei-ano', fmtBRL(ano));
-    var pct = ano/MEI_LIMITE*100;
-    var bar = document.getElementById('mei-bar');
-    bar.style.width = Math.min(100, pct).toFixed(1)+'%';
-    bar.className = pct > 100 ? 'bad' : (pct > 80 ? 'warn' : '');
-    var lim;
-    if(ano <= MEI_LIMITE){
-      lim = 'Nesse ritmo você usa ' + fmtPct(pct,0) + ' do limite de ' + fmtBRL(MEI_LIMITE) + '. Ainda cabem ' + fmtBRL(MEI_LIMITE-ano) + '.';
-    } else {
-      var excesso = ano - MEI_LIMITE;
-      lim = 'Passou do limite em ' + fmtBRL(excesso) + '. ' + (excesso/MEI_LIMITE*100 > 20
-        ? 'Acima de 20% de excesso, o desenquadramento retroage ao início do ano.'
-        : 'Até 20% de excesso, você paga a diferença e passa a ser ME em janeiro.');
-    }
-    set('mei-limite', lim);
-
-    var tb = document.getElementById('mei-tabela');
-    tb.innerHTML = '';
-    var linhas = [['INSS (sua aposentadoria)', MEI_INSS]];
-    if(a.icms) linhas.push(['ICMS — vira IBS na reforma', a.icms]);
-    if(a.iss)  linhas.push(['ISS — vira IBS na reforma', a.iss]);
-    linhas.push(['Total do DAS', das]);
-    linhas.forEach(function(l,i){
-      var tr = document.createElement('tr');
-      if(i === linhas.length-1) tr.className = 'total';
-      var td1 = document.createElement('td'); td1.textContent = l[0];
-      var td2 = document.createElement('td'); td2.className='num'; td2.textContent = fmtBRL(l[1]);
-      tr.appendChild(td1); tr.appendChild(td2); tb.appendChild(tr);
-    });
-
-    var facts = [
-      ['Seu DAS continua fixo.', 'A CBS e o IBS já estão dentro dele. Você não passa a cobrar 26,5% por fora do preço.'],
-      ['Em 2026 nada muda para você.', 'O ano de teste da CBS e do IBS não alcança o SIMEI.']
-    ];
-    if(mei.cli === 'pj'){
-      facts.push(['Sua nota quase não gera crédito.', 'A empresa que compra de você só aproveita o que foi pago de IBS e CBS no seu DAS — e ali há R$ 1,00 de ICMS e R$ 5,00 de ISS. Um fornecedor do regime normal passa crédito cheio, então alguns clientes PJ vão pedir desconto.']);
-      facts.push(['Nota fiscal para PJ segue obrigatória.', 'Para consumidor final, continua opcional.']);
-    } else {
-      facts.push(['Vendendo para consumidor final, isso não pesa contra você.', 'Seu cliente não aproveita crédito de ninguém, então a sua falta de crédito não tira a sua competitividade.']);
-    }
-    facts.push(['Tirar a CBS e o IBS do DAS não se aplica ao MEI.', 'A opção pelo regime regular foi aberta às ME e EPP do Simples, sem aplicação ao SIMEI no ciclo de 2026.']);
-    if(ano <= 40500){
-      facts.push(['Nesse faturamento, existe a figura do nanoempreendedor.', 'A pessoa física que fatura menos da metade do limite do MEI (cerca de R$ 40.500 por ano) e não se inscreve como MEI fica fora do campo do IBS e da CBS (art. 26, IV, da LC 214/2025). É outro enquadramento, não um desconto no seu DAS.']);
-    }
-
-    var fc = document.getElementById('mei-facts');
-    fc.innerHTML = '';
-    facts.forEach(function(f){
-      var d = document.createElement('div'); d.className='fact';
-      var inner = document.createElement('div');
-      var b = document.createElement('b'); b.textContent = f[0];
-      inner.appendChild(b); inner.appendChild(document.createTextNode(' '+f[1]));
-      d.appendChild(inner); fc.appendChild(d);
-    });
-
-    set('mei-ativ-hint', a.hint);
-    set('mei-cli-hint', byId(MEI_CLI, mei.cli).hint);
-  }
-
-  function renderMEI(){
-    renderChips('mei-ativ', MEI_ATIV, function(a){return a.label},
-      function(a){return a.id===mei.ativ}, function(a){ mei.ativ=a.id; renderMEI(); calcMEI(); });
-    renderChips('mei-cli', MEI_CLI, function(c){return c.label},
-      function(c){return c.id===mei.cli}, function(c){ mei.cli=c.id; renderMEI(); calcMEI(); });
-  }
 
   /* ---------------- Simples ---------------- */
 
@@ -731,8 +556,8 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
 
   function calcSN(){
     var anexo = byId(ANEXOS, sn.anexo);
-    var F = sn.fat;
-    var rbt12 = F*12;
+    var rbt12 = sn.rbt12;   // receita bruta dos últimos 12 meses, informada
+    var F = rbt12/12;       // média por mês, base das contas mensais
     var fi = faixaDe(anexo, rbt12);
     var faixa = anexo.faixas[fi];
     var rep = anexo.rep[fi];
@@ -853,9 +678,9 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     var cPct = aA*share;                       // fatia da nota do DAS que vira crédito
     var credA = V*cPct;
     var credB = V*t;
-    set('cr-titulo', vigente ? 'Crédito de ' + fmtBRL(credA) + ' por ' + fmtBRL(V) + ' de serviço' : 'Sem crédito em 2026');
+    set('cr-titulo', vigente ? 'Crédito de ' + fmtBRL(credA) + ' por ' + fmtBRL(V) + ' de nota' : 'Sem crédito em 2026');
     if(vigente){
-      set('cr-sub', 'Comprando de um fornecedor que ficou no DAS, você credita só ' + fmtPct(cPct*100) + ' do preço. Se ele apurasse CBS e IBS por fora, o crédito seria de ' + fmtPct(t*100) + ': ' + fmtBRL(credB) + ' no mesmo serviço.');
+      set('cr-sub', 'Comprando de um fornecedor que ficou no DAS, você credita só ' + fmtPct(cPct*100) + ' do preço. Se ele apurasse CBS e IBS por fora, o crédito seria de ' + fmtPct(t*100) + ': ' + fmtBRL(credB) + ' na mesma nota.');
       set('cr-nota-a', fmtBRL(V));
       set('cr-nota-b', fmtBRL(V*(1+t)));
       set('cr-cred-a', fmtBRL(credA));
@@ -865,7 +690,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
       set('cr-liq-a', fmtBRL(V-credA));
       set('cr-liq-b', fmtBRL(V));
       var maxNota = (1-cPct) > 0 ? V/(1-cPct) : 0;
-      set('cr-how', 'Na negociação: o fornecedor do DAS deixa de te dar ' + fmtBRL(credB-credA) + ' de crédito a cada ' + fmtBRL(V) + ' de serviço em relação a um fornecedor do regime regular. Para o seu custo líquido ficar igual ao de um fornecedor regular que cobra ' + fmtBRL(V) + ' sem IVA, a nota do fornecedor do DAS pode ser de até ' + fmtBRL(maxNota) + '. Acima disso, você paga mais caro. O crédito exige documento fiscal eletrônico idôneo (art. 47, § 1º, II) e, para fornecedor no DAS, corresponde ao montante equivalente ao devido por meio do regime (art. 47, § 9º, II, da LC 214/2025).');
+      set('cr-how', 'Na negociação: o fornecedor do DAS deixa de te dar ' + fmtBRL(credB-credA) + ' de crédito a cada ' + fmtBRL(V) + ' de nota em relação a um fornecedor do regime regular. Para o seu custo líquido ficar igual ao de um fornecedor regular que cobra ' + fmtBRL(V) + ' sem IVA, a nota do fornecedor do DAS pode ser de até ' + fmtBRL(maxNota) + '. Acima disso, você paga mais caro. O crédito exige documento fiscal eletrônico idôneo (art. 47, § 1º, II) e, para fornecedor no DAS, corresponde ao montante equivalente ao devido por meio do regime (art. 47, § 9º, II, da LC 214/2025).');
     } else {
       set('cr-sub', 'O ano de teste da CBS e do IBS não alcança o Simples Nacional. Escolha 2027 ou um ano seguinte para ver o crédito.');
       ['nota','cred','pct','liq'].forEach(function(k){ set('cr-'+k+'-a','—'); set('cr-'+k+'-b','—'); });
@@ -874,7 +699,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
 
     /* ---- textos de apoio ---- */
     var nomeFaixa = ['1ª','2ª','3ª','4ª','5ª','6ª'][fi];
-    set('sn-fat-hint','Usamos 12× esse valor como sua receita dos últimos 12 meses: '+fmtBRL(rbt12)+', que cai na '+nomeFaixa+' faixa do anexo '+anexo.id+'.');
+    set('sn-fat-hint','É a RBT12, que define a faixa: '+fmtBRL(rbt12)+' cai na '+nomeFaixa+' faixa do anexo '+anexo.id+'. Os valores por mês abaixo usam a média de '+fmtBRL(F)+'.');
     set('sn-anexo-hint', anexo.nota);
     set('sn-ano-hint', ANO_HINTS_SN[sn.ano]);
     set('sn-red-hint', byId(REDUCOES, sn.red).hint);
@@ -975,7 +800,6 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   /* ---------------- abas ---------------- */
 
   var TABS = [
-    {tab:'tab-mei', panel:'panel-mei'},
     {tab:'tab-simples', panel:'panel-simples'},
     {tab:'tab-lp', panel:'panel-lp'}
   ];
@@ -990,14 +814,6 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     document.getElementById(t.tab).addEventListener('click', function(){ showTab(t.panel); });
   });
 
-  document.getElementById('mei-to-simples').addEventListener('click', function(){
-    sn.fat = mei.fat;
-    document.getElementById('sn-fat').value = sn.fat.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-    calcSN();
-    showTab('panel-simples');
-    window.scrollTo({top:0,behavior:'smooth'});
-  });
-
   /* ---------------- inputs ---------------- */
 
   function bindAmount(id, onChange){
@@ -1007,13 +823,11 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
       el.value = parseValor(el.value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
     });
   }
-  bindAmount('mei-fat', function(v){ mei.fat=v; calcMEI(); });
-  bindAmount('sn-fat', function(v){ sn.fat=v; calcSN(); });
+  bindAmount('sn-rbt12', function(v){ sn.rbt12=v; calcSN(); });
   bindAmount('sn-insumos', function(v){ sn.insumos=v; calcSN(); });
   bindAmount('cr-valor', function(v){ sn.compra=v; calcSN(); });
   bindAmount('lp-valor', function(v){ lp.valor=v; calcLP(); });
 
-  renderMEI(); calcMEI();
   renderSN();  calcSN();
   renderLP();  calcLP();
 })();
