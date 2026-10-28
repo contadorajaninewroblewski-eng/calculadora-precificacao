@@ -1,6 +1,6 @@
 # Registro do projeto: calculadora de precificação na reforma tributária
 
-Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026, atualizado em 27/10/2026 (saída da aba do MEI e campo de RBT12).
+Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026, atualizado em 27/10/2026 (saída da aba do MEI, campo de RBT12 e redução de 40% da hotelaria).
 
 ## Onde está tudo
 
@@ -24,6 +24,7 @@ Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, pa
 1. **Aba do MEI removida.** O DAS do MEI é valor fixo e a reforma não muda isso, então a aba não acrescentava nada. Saíram o painel, os dados, as funções e o CSS que só ela usava. A página abre agora na aba do Simples Nacional e tem duas abas.
 2. **Campo de RBT12.** A aba do Simples passou a pedir a receita bruta dos últimos 12 meses, em vez do faturamento médio por mês. É o número que o contador tem em mãos e é o que define a faixa. A média mensal, usada nas contas por mês, passou a ser a RBT12 dividida por doze.
 3. **Valor da nota.** O campo do bloco do comprador virou "Valor da nota do fornecedor", com o texto ajustado: para fornecedor no DAS, a nota é o próprio preço, porque ele não cobra CBS e IBS por fora. O bloco passou a falar em lucro real **ou presumido**, já que os dois apuram CBS e IBS pelo regime regular.
+4. **Redução de 40% no enquadramento.** Entrou a faixa de redução de 40% do IBS e da CBS: hotelaria, parques de diversão e parques temáticos (art. 281 da LC 214/2025) e bares e restaurantes (art. 275). Os textos das reduções de 30% e 60% ganharam a referência legal (arts. 127 e 128). Como a lei veda o crédito para quem compra nesses regimes (arts. 283 e 276), nesse enquadramento o cálculo zera o crédito do comprador no cenário de apuração por fora, o custo do cliente pessoa jurídica passa a ser o preço com o IVA somado e os textos do veredito e do bloco de crédito mudam junto. A vedação é recente e há discussão sobre o seu alcance, por isso o texto pede para confirmar o enquadramento do fornecedor.
 
 Conferido depois da mudança: anexo III com RBT12 de R$ 480.000 em 2027 mantém alíquota efetiva de 9,83% e crédito de R$ 163,10 por nota de R$ 10.000 (1,63%); anexo I com RBT12 de R$ 180.000 em 2033 dá 4% de alíquota efetiva e 1,98% de crédito.
 
@@ -54,7 +55,7 @@ O valor máximo da nota do fornecedor do DAS usa a premissa de que o fornecedor 
 - **Teto de 5% do ISS na 5ª faixa dos anexos III e IV:** o cálculo não trata esse teto. A LC 123 prevê uma repartição diferente quando a alíquota efetiva passa de 14,92537% (anexo III) ou 12,5% (anexo IV).
 - **Sublimite de R$ 3,6 milhões:** as Resoluções CGSN 190 e 191/2026 estendem o sublimite também ao IBS. O código só trata o sublimite na 6ª faixa e não foi atualizado para essa regra.
 - **Fator R:** o anexo é escolhido manualmente pelo usuário.
-- **IRPJ, CSLL e CPP fora do DAS, Imposto Seletivo, regimes específicos e particularidades estaduais e municipais:** não considerados.
+- **IRPJ, CSLL e CPP fora do DAS, Imposto Seletivo e particularidades estaduais e municipais:** não considerados. Dos regimes específicos, só entram a redução de 40% (hotelaria, parques, bares e restaurantes) e a vedação de crédito ao comprador; as demais regras desses regimes, inclusive o crédito do próprio prestador, não foram tratadas. Também não entrou a aviação regional, cujo percentual não foi confirmado no texto da lei.
 - **Alíquota de referência de 26,5%** (8,8% de CBS e 17,7% de IBS) é estimativa do Comitê Gestor. A definitiva sai por resolução do Senado, com prazo até 15/12/2026. Revisar os números depois disso.
 - **Prazo de opção pelo regime regular (Simples híbrido):** a Receita Federal informa 1º a 30/9/2026 (valendo de janeiro a junho de 2027, com cancelamento até 30/11) e uma segunda janela de 1º a 31/3/2027 (segundo semestre). A CBIC noticiou prorrogação até 30/10/2026. Confirmar no Portal do Simples Nacional.
 - **Prévia do link no WhatsApp:** não foi possível testar daqui. O WhatsApp guarda a prévia de cada link por um tempo. Se mostrar só o domínio, enviar o link com `?v=2` no final.

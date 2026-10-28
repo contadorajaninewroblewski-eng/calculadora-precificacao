@@ -17,6 +17,7 @@ Abra o arquivo `index.html` no navegador. Não precisa de servidor nem de instal
 - A parcela de CBS e IBS dentro do DAS, em cada ano, é a parcela de PIS/COFINS (que vira CBS em 2027) somada à de ICMS/ISS multiplicada pelo avanço do IBS: 10% em 2029, 20% em 2030, 30% em 2031, 40% em 2032 e 100% em 2033. É o crédito que o cliente do regime regular consegue aproveitar quando o fornecedor fica na guia única, limitado ao que foi efetivamente pago (art. 47, § 9º, II, da LC 214/2025), e é também a parcela que sai da guia na opção pelo regime regular.
 - A CBS e o IBS cobrados por fora usam 8,7% de CBS mais 0,1% de IBS em 2027 e 2028 (a alíquota de referência da CBS é reduzida em 0,1 ponto percentual nesses dois anos) e, de 2029 em diante, 8,8% de CBS mais 17,7% de IBS proporcionais ao avanço da transição. Em 2026, a fase de teste não alcança o Simples Nacional.
 - O crédito sobre insumos, no cenário de apuração por fora, é a parcela de CBS e IBS embutida no valor pago aos fornecedores.
+- O enquadramento da atividade aplica a redução de alíquota do IBS e da CBS: 30% para serviços de profissões intelectuais regulamentadas (art. 127 da LC 214/2025), 40% para hotelaria, parques de diversão e parques temáticos (art. 281) e para bares e restaurantes (art. 275), 60% para a lista do art. 128 e alíquota zero para a cesta básica nacional. Na redução de 40%, a lei veda o crédito de CBS e IBS para quem compra (arts. 283 e 276): nesse enquadramento o cálculo zera o crédito do comprador no cenário de apuração por fora, e o custo do cliente pessoa jurídica passa a ser o preço com o IVA somado.
 - A comparação entre os dois caminhos é feita mantendo a mesma sobra para a empresa e olhando quanto os clientes pagariam em cada cenário, ponderado pela fatia de clientes pessoa jurídica.
 
 A alíquota de referência de 26,5% (8,8% de CBS e 17,7% de IBS) é a estimativa pública do Comitê Gestor do IBS. A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026, então nenhum número aqui é definitivo.
@@ -37,7 +38,7 @@ Exemplo: fornecedor do anexo III com RBT12 de R$ 480.000 (3ª faixa, alíquota e
 
 ## O que o cálculo não considera
 
-Teto de 5% do ISS na 5ª faixa, sublimite estadual, fator R (o anexo é escolhido na mão), IRPJ, CSLL e CPP recolhidos fora do DAS, Imposto Seletivo, regimes específicos e particularidades estaduais e municipais.
+Teto de 5% do ISS na 5ª faixa, sublimite estadual, fator R (o anexo é escolhido na mão), IRPJ, CSLL e CPP recolhidos fora do DAS, Imposto Seletivo e particularidades estaduais e municipais. Dos regimes específicos, entram apenas a redução de 40% e a vedação de crédito ao comprador; as demais regras próprias desses regimes, como base de cálculo e crédito do próprio prestador, ficam de fora.
 
 ## Histórico, decisões e pendências
 

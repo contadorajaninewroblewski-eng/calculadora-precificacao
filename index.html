@@ -399,7 +399,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   </div>
 
   <div class="legal">
-    Simulação simplificada e educativa, com base na Lei Complementar 214/2025 (art. 41, § 3º, que permite apurar IBS e CBS fora do DAS, e art. 47, § 9º, II, sobre o crédito de quem compra de optante do Simples), na Lei Complementar 227/2026, nas Resoluções CGSN 190 e 191/2026, nas tabelas dos anexos da Lei Complementar 123/2006 (conferidas com o texto compilado em 20/10/2026) e em estimativas públicas da alíquota de referência (CGIBS, 26,5% somados — 8,8% de CBS e 17,7% de IBS). <b>A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026</b> — nenhum número aqui é definitivo. O cálculo parte da receita bruta dos últimos 12 meses informada e da média mensal dela, trata o crédito de insumos como a parcela de CBS/IBS embutida no que você paga, e não considera IRPJ/CSLL/CPP fora do DAS, sublimite estadual, o teto de 5% do ISS na 5ª faixa, Imposto Seletivo, regimes específicos nem particularidades estaduais e municipais. Não substitui análise profissional.
+    Simulação simplificada e educativa, com base na Lei Complementar 214/2025 (art. 41, § 3º, que permite apurar IBS e CBS fora do DAS, e art. 47, § 9º, II, sobre o crédito de quem compra de optante do Simples, e arts. 127, 128, 275 e 281, sobre as reduções de alíquota), na Lei Complementar 227/2026, nas Resoluções CGSN 190 e 191/2026, nas tabelas dos anexos da Lei Complementar 123/2006 (conferidas com o texto compilado em 20/10/2026) e em estimativas públicas da alíquota de referência (CGIBS, 26,5% somados — 8,8% de CBS e 17,7% de IBS). <b>A alíquota definitiva só será fixada por resolução do Senado, com prazo até 15/12/2026</b> — nenhum número aqui é definitivo. O cálculo parte da receita bruta dos últimos 12 meses informada e da média mensal dela, trata o crédito de insumos como a parcela de CBS/IBS embutida no que você paga, e não considera IRPJ/CSLL/CPP fora do DAS, sublimite estadual, o teto de 5% do ISS na 5ª faixa, Imposto Seletivo nem particularidades estaduais e municipais. Dos regimes específicos, entram apenas a redução de 40% de hotelaria, parques e bares e restaurantes (arts. 275 e 281) e a vedação de crédito a quem compra (arts. 276 e 283); as outras regras próprias desses regimes ficam de fora. Não substitui análise profissional.
   </div>
 
   <footer>ASSESCONT Serviços Contábeis · simulador educativo, sem validade fiscal</footer>
@@ -463,8 +463,9 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
   var MIX = [0,25,50,75,100];
   var REDUCOES = [
     {id:'padrao', label:'Padrão', red:0, hint:'Alíquota cheia do IBS e da CBS.'},
-    {id:'r30', label:'−30%', red:0.30, hint:'Redução de 30%: profissões intelectuais regulamentadas.'},
-    {id:'r60', label:'−60%', red:0.60, hint:'Redução de 60%: saúde, educação, agro e outros serviços essenciais.'},
+    {id:'r30', label:'−30%', red:0.30, hint:'Redução de 30%: serviços de profissões intelectuais regulamentadas, fiscalizadas por conselho profissional (art. 127 da LC 214/2025).'},
+    {id:'r40', label:'−40%', red:0.40, semCred:true, hint:'Redução de 40%: hotelaria, parques de diversão e parques temáticos (art. 281 da LC 214/2025) e bares e restaurantes (art. 275). Nesses regimes a lei veda o crédito de CBS e IBS para quem compra (arts. 283 e 276).'},
+    {id:'r60', label:'−60%', red:0.60, hint:'Redução de 60%: saúde, educação, dispositivos médicos, agro e os demais bens e serviços da lista do art. 128 da LC 214/2025.'},
     {id:'zero', label:'Alíquota zero', red:1, hint:'Alíquota zero: itens da cesta básica nacional.'}
   ];
 
@@ -570,6 +571,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     var aB = aA * (1 - share);                     // DAS que sobra fora do regime do DAS
     var red = byId(REDUCOES, sn.red);
     var t = ivaRate(sn.ano)/100 * (1 - red.red);   // IVA cobrado por fora
+    var semCred = !!red.semCred;                   // regimes em que quem compra não credita
     var I = sn.insumos;
     var credIns = I * t/(1+t);
     var mix = sn.mix/100;
@@ -591,7 +593,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     var pA = (1-aA) > 0 ? (sobraA + I)/(1-aA) : 0;
     var pB = (1-aB) > 0 ? (sobraA + I - credIns)/(1-aB) : 0;
     var cfA = pA, pjA = pA*(1 - aA*share);
-    var cfB = pB*(1+t), pjB = pB;
+    var cfB = pB*(1+t), pjB = semCred ? pB*(1+t) : pB;
     var mixA = mix*pjA + (1-mix)*cfA;
     var mixB = mix*pjB + (1-mix)*cfB;
 
@@ -627,7 +629,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
       } else if(dif > 0){
         badge.textContent = 'Compensa sair';
         set('sn-verdict','CBS e IBS por fora');
-        set('sn-verdict-sub','Para você receber os mesmos '+fmtBRL(sobraA)+' por mês, seus clientes pagariam em média '+fmtBRL(mixB)+' por fora, contra '+fmtBRL(mixA)+' no DAS. Pesa o crédito cheio que você passa a quem compra de você'+(I>0?' e o crédito dos seus insumos':'')+'.');
+        set('sn-verdict-sub','Para você receber os mesmos '+fmtBRL(sobraA)+' por mês, seus clientes pagariam em média '+fmtBRL(mixB)+' por fora, contra '+fmtBRL(mixA)+' no DAS. Pesa '+(semCred ? 'a redução de 40% da alíquota' : 'o crédito cheio que você passa a quem compra de você')+(I>0?' e o crédito dos seus insumos':'')+'.');
         colB.classList.add('pick');
       } else {
         badge.textContent = 'Melhor ficar';
@@ -664,7 +666,8 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     setVal('b-sobra', vigente ? fmtBRL(sobraB) : '—',
       vigente ? 'o que entra, menos a guia, os insumos e o repasse' : null);
     setVal('b-preco', vigente ? fmtBRL(precoB) : '—', vigente ? 'o seu preço mais a CBS e o IBS' : null);
-    setVal('b-custo-pj', vigente ? fmtBRL(F) : '—', vigente ? 'ele credita toda a CBS e o IBS' : null);
+    setVal('b-custo-pj', vigente ? fmtBRL(semCred ? precoB : F) : '—',
+      vigente ? (semCred ? 'nessa atividade a lei veda o crédito para quem compra' : 'ele credita toda a CBS e o IBS') : null);
 
     set('m-cf-a', fmtBRL(cfA));
     set('m-pj-a', fmtBRL(pjA));
@@ -677,20 +680,24 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     var V = sn.compra;
     var cPct = aA*share;                       // fatia da nota do DAS que vira crédito
     var credA = V*cPct;
-    var credB = V*t;
+    var credB = semCred ? 0 : V*t;
     set('cr-titulo', vigente ? 'Crédito de ' + fmtBRL(credA) + ' por ' + fmtBRL(V) + ' de nota' : 'Sem crédito em 2026');
     if(vigente){
-      set('cr-sub', 'Comprando de um fornecedor que ficou no DAS, você credita só ' + fmtPct(cPct*100) + ' do preço. Se ele apurasse CBS e IBS por fora, o crédito seria de ' + fmtPct(t*100) + ': ' + fmtBRL(credB) + ' na mesma nota.');
+      set('cr-sub', semCred
+        ? 'Comprando de um fornecedor que ficou no DAS, você credita ' + fmtPct(cPct*100) + ' do preço. Se ele apurasse CBS e IBS por fora, você não creditaria nada: nessas atividades a lei veda o crédito para quem compra (arts. 276 e 283 da LC 214/2025).'
+        : 'Comprando de um fornecedor que ficou no DAS, você credita só ' + fmtPct(cPct*100) + ' do preço. Se ele apurasse CBS e IBS por fora, o crédito seria de ' + fmtPct(t*100) + ': ' + fmtBRL(credB) + ' na mesma nota.');
       set('cr-nota-a', fmtBRL(V));
       set('cr-nota-b', fmtBRL(V*(1+t)));
       set('cr-cred-a', fmtBRL(credA));
       set('cr-cred-b', fmtBRL(credB));
       set('cr-pct-a', fmtPct(cPct*100));
-      set('cr-pct-b', fmtPct(t*100));
+      set('cr-pct-b', fmtPct(semCred ? 0 : t*100));
       set('cr-liq-a', fmtBRL(V-credA));
-      set('cr-liq-b', fmtBRL(V));
+      set('cr-liq-b', fmtBRL(V*(1+t) - credB));
       var maxNota = (1-cPct) > 0 ? V/(1-cPct) : 0;
-      set('cr-how', 'Na negociação: o fornecedor do DAS deixa de te dar ' + fmtBRL(credB-credA) + ' de crédito a cada ' + fmtBRL(V) + ' de nota em relação a um fornecedor do regime regular. Para o seu custo líquido ficar igual ao de um fornecedor regular que cobra ' + fmtBRL(V) + ' sem IVA, a nota do fornecedor do DAS pode ser de até ' + fmtBRL(maxNota) + '. Acima disso, você paga mais caro. O crédito exige documento fiscal eletrônico idôneo (art. 47, § 1º, II) e, para fornecedor no DAS, corresponde ao montante equivalente ao devido por meio do regime (art. 47, § 9º, II, da LC 214/2025).');
+      set('cr-how', semCred
+        ? 'Na negociação: nessa atividade o fornecedor que apura por fora soma ' + fmtPct(t*100) + ' ao preço e você não credita nada (arts. 275, 276, 281 e 283 da LC 214/2025), enquanto o fornecedor no DAS ainda te passa ' + fmtBRL(credA) + ' de crédito a cada ' + fmtBRL(V) + ' de nota, pelo art. 47, § 9º, II. O crédito exige documento fiscal eletrônico idôneo (art. 47, § 1º, II). Confirme o enquadramento do fornecedor antes de decidir.'
+        : 'Na negociação: o fornecedor do DAS deixa de te dar ' + fmtBRL(credB-credA) + ' de crédito a cada ' + fmtBRL(V) + ' de nota em relação a um fornecedor do regime regular. Para o seu custo líquido ficar igual ao de um fornecedor regular que cobra ' + fmtBRL(V) + ' sem IVA, a nota do fornecedor do DAS pode ser de até ' + fmtBRL(maxNota) + '. Acima disso, você paga mais caro. O crédito exige documento fiscal eletrônico idôneo (art. 47, § 1º, II) e, para fornecedor no DAS, corresponde ao montante equivalente ao devido por meio do regime (art. 47, § 9º, II, da LC 214/2025).');
     } else {
       set('cr-sub', 'O ano de teste da CBS e do IBS não alcança o Simples Nacional. Escolha 2027 ou um ano seguinte para ver o crédito.');
       ['nota','cred','pct','liq'].forEach(function(k){ set('cr-'+k+'-a','—'); set('cr-'+k+'-b','—'); });
@@ -708,7 +715,7 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     if(!vigente){
       how = 'dentro do DAS, a parcela que hoje é PIS/COFINS passa a ser CBS, e a de ICMS/ISS vira IBS aos poucos, até 2033. A alíquota do seu anexo não muda por isso. Escolha 2027 ou um ano seguinte para comparar a guia única com a apuração por fora.';
     } else {
-      how = 'na '+nomeFaixa+' faixa do anexo '+anexo.id+', '+fmtPct(share*100,1)+' do seu DAS já é CBS e IBS em '+sn.ano+'. Ficando na guia única, é esse pedaço — '+fmtBRL(credCliA)+' por mês — que seu cliente empresa consegue creditar, e nada mais. Optando por apurar por fora, essa parcela sai do DAS, que cai para '+fmtBRL(dasB)+', você cobra '+fmtPct(t*100)+' por fora do preço, credita o IBS e a CBS das suas compras e passa crédito cheio para quem compra de você.';
+      how = 'na '+nomeFaixa+' faixa do anexo '+anexo.id+', '+fmtPct(share*100,1)+' do seu DAS já é CBS e IBS em '+sn.ano+'. Ficando na guia única, é esse pedaço — '+fmtBRL(credCliA)+' por mês — que seu cliente empresa consegue creditar, e nada mais. Optando por apurar por fora, essa parcela sai do DAS, que cai para '+fmtBRL(dasB)+', você cobra '+fmtPct(t*100)+' por fora do preço, credita o IBS e a CBS das suas compras e '+(semCred ? 'não passa crédito para quem compra de você, porque a lei veda nessa atividade (arts. 276 e 283 da LC 214/2025).' : 'passa crédito cheio para quem compra de você.');
       if(fi === 5){
         how += ' Nessa faixa de faturamento o ICMS e o ISS já saem do DAS por conta do sublimite, mesmo sem opção.';
       }
