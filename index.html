@@ -829,6 +829,9 @@ footer{margin-top:30px;text-align:center;color:var(--fg-faint);font-size:12px}
     el.addEventListener('blur', function(){
       el.value = parseValor(el.value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
     });
+    // ao recarregar a página, o navegador devolve o que já tinha sido digitado
+    // sem disparar evento nenhum: a conta parte do que está no campo, não do valor de fábrica
+    onChange(parseValor(el.value));
   }
   bindAmount('sn-rbt12', function(v){ sn.rbt12=v; calcSN(); });
   bindAmount('sn-insumos', function(v){ sn.insumos=v; calcSN(); });

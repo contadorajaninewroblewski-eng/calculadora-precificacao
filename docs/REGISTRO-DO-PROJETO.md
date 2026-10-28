@@ -1,6 +1,6 @@
 # Registro do projeto: calculadora de precificação na reforma tributária
 
-Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026, atualizado em 27/10/2026 (saída da aba do MEI, campo de RBT12 e redução de 40% da hotelaria).
+Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, para que o trabalho possa ser retomado em qualquer computador. Data do registro: 22/10/2026, atualizado em 28/10/2026 (saída da aba do MEI, campo de RBT12, redução de 40% da hotelaria e correção dos campos restaurados pelo navegador).
 
 ## Onde está tudo
 
@@ -18,6 +18,10 @@ Este arquivo reúne o contexto, as decisões tomadas e o que ficou em aberto, pa
 4. **README e aviso legal** atualizados com a LC 227/2026 e as Resoluções CGSN 190 e 191/2026.
 5. **`<meta charset="utf-8">`** acrescentado, porque sem ele os acentos quebravam em servidores que não informam a codificação.
 6. **Tags Open Graph** (título, descrição, endereço) acrescentadas para a prévia do link no WhatsApp mostrar "Sua Empresa na Reforma".
+
+## Correção de 28/10/2026
+
+**Campo de valor restaurado pelo navegador.** Ao recarregar a página, o navegador devolve o texto já digitado nos campos de valor, mas sem disparar evento de digitação. A página partia dos valores de fábrica (RBT12 de R$ 240.000 e nota de R$ 10.000) e ficava mostrando contas de um valor diferente do que aparecia no campo. `bindAmount` passou a aplicar o conteúdo do campo também na abertura da página, então a conta sempre parte do que está escrito. Vale para os quatro campos de valor: RBT12, insumos, valor da nota e valor do serviço da aba de fora do Simples.
 
 ## Alterações de 27/10/2026
 
